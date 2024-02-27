@@ -1,8 +1,8 @@
 import 'dart:convert';
-
+import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:http/http.dart' as http;
 
-class PackageApiService{
+class PackageApiService {
   Future<dynamic> addPackageApi(String packageName,String price,String duration) async
   {
     var client =http.Client();
@@ -27,4 +27,18 @@ class PackageApiService{
       throw Exception("failed to add");
     }
   }
+
+  Future<List<Package>> getPackageApi() async {
+    var client = http.Client();
+    var apiUrl = Uri.parse("http://localhost:3006/api/packages/viewpackage");
+
+    var response = await client.get(apiUrl);
+    if (response.statusCode == 200) {
+      return packageFromJson(response.body);
+    }
+    else {
+      return [];
+    }
+  }
+
 }
