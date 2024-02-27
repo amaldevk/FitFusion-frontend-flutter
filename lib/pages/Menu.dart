@@ -16,7 +16,7 @@ class _MenuPageState extends State<MenuPage> {
   int currentIndex = 0; // Added currentIndex variable
   final List<Widget> pages = [
     Add_Packege(),
-    Add_Trainer()
+    Add_Trainer(),
   ];
 
   @override
@@ -24,9 +24,6 @@ class _MenuPageState extends State<MenuPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF752FFF), // Added app bar title
-        ),
         body: pages[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
@@ -35,7 +32,9 @@ class _MenuPageState extends State<MenuPage> {
               currentIndex = index;
             });
           },
-          currentIndex: currentIndex, // Added currentIndex to control active item
+          currentIndex: currentIndex,
+          selectedItemColor: Color(0xFF000066),
+          unselectedItemColor: Colors.black,//
           items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.add_circle_sharp, color: Color(0xFF752FFF)),
@@ -45,6 +44,7 @@ class _MenuPageState extends State<MenuPage> {
               icon: Icon(Icons.add_circle_sharp, color: Color(0xFF752FFF)),
               label: "Trainer",
             ),
+
             // Add other BottomNavigationBarItems here if needed
           ],
         ),

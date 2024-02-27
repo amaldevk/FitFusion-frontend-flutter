@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:fitfusion_app/Models/TrainerModel.dart';
 import 'package:http/http.dart' as http;
 
 class TrainerApiService{
@@ -26,6 +26,18 @@ class TrainerApiService{
     else
     {
       throw Exception("failed to add");
+    }
+  }
+  Future<List<Trainer>> getTrainerApi() async {
+    var client = http.Client();
+    var apiUrl = Uri.parse("http://localhost:3006/api/trainer/viewtrainers");
+
+    var response = await client.get(apiUrl);
+    if (response.statusCode == 200) {
+      return trainerFromJson(response.body);
+    }
+    else {
+      return [];
     }
   }
 }
