@@ -33,7 +33,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   end: Alignment.bottomRight,
                   colors: [
                     Color(0xE4B7B8EA),
-                    Color(0xFF5E06E3)
+                    Color(0xFF5E06E3).withOpacity(0.3)
                   ]
               )
           ),
@@ -61,13 +61,17 @@ class _AdminLoginState extends State<AdminLogin> {
               SizedBox(height: 35,),
               TextField(
                 controller: password,
+                obscureText: true,
+
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     labelText: "Password",
                     hintText: "Enter admin password",
+                    suffixIcon: Icon(Icons.key),
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white)
+                        borderSide: BorderSide(color: Colors.white),
+
                     )
                 ),
               ),
@@ -86,19 +90,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     onPressed: checkCredential,
                     child: Text("SIGN IN")),
               ),
-              SizedBox(height: 75,),
-              SizedBox(
-                  height: 45,
-                  width: 350,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          side: BorderSide(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                      ),
-                      onPressed: (){}, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
-              SizedBox(height: 55,)
+
             ],
           ),
         ),

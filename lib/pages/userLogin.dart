@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:fitfusion_app/pages/Admin_Login.dart';
+import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:fitfusion_app/pages/userRegister.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +31,7 @@ class _LoginState extends State<Login> {
       // preferences.toString("userid",userId);
       print("successfull uid"+userId);
 
-      //Navigator.push(context,MaterialPageRoute(builder: (context)=>menu()));
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
     }
 
     else if(response["status"]=="Invalid user"){
