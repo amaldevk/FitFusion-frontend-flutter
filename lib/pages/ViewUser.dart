@@ -67,7 +67,7 @@ class _viewUserState extends State<viewUser> {
                             ),
                           ),
                           title: Text(
-                            "User Name: " + user.name,
+                             user.name,
                             style: TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
@@ -86,7 +86,7 @@ class _viewUserState extends State<viewUser> {
                                 "Email Id: " +
                                 user.emailid +
                                 "\n" +
-                                "Payment Status: " +
+                                "Blood Group: " +
                                 user.bloodgroup,
                             style: TextStyle(
                               fontSize: 16,

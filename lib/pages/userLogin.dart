@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -28,10 +29,10 @@ class _LoginState extends State<Login> {
 
       SharedPreferences.setMockInitialValues({});
       SharedPreferences preferences = await SharedPreferences.getInstance();
-      // preferences.toString("userid",userId);
+      preferences.setString("userid", userId);
       print("successfull uid"+userId);
 
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
+     // Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
     }
 
     else if(response["status"]=="Invalid user"){
