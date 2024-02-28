@@ -58,6 +58,7 @@ class _View_TrainerState extends State<View_Trainer> {
                     );
                   });
             }
+
             else
             {
               return CircularProgressIndicator();
