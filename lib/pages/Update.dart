@@ -10,7 +10,7 @@ class UpdatePayment extends StatefulWidget {
 class _UpdatePaymentState extends State<UpdatePayment> {
   final UserService _userService = UserService();
   final TextEditingController _emailController = TextEditingController();
-  String _paymentStatus = "paid";
+  String _paymentStatus = "Success";
 
   void _updatePaymentStatus() async {
     final email = _emailController.text;
@@ -70,7 +70,7 @@ class _UpdatePaymentState extends State<UpdatePayment> {
                   _paymentStatus = value!;
                 });
               },
-              items: <String>['paid', 'pending']
+              items: <String>['Success', 'pending']
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
