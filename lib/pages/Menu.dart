@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/pages/Packege.dart';
 import 'package:fitfusion_app/pages/Trainer.dart';
+import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 void main() {
@@ -17,6 +18,7 @@ class _MenuPageState extends State<MenuPage> {
   final List<Widget> pages = [
     Add_Packege(),
     Add_Trainer(),
+    viewUser()
   ];
 
   @override
@@ -37,14 +39,17 @@ class _MenuPageState extends State<MenuPage> {
           unselectedItemColor: Colors.black,//
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_sharp, color: Color(0xFF752FFF)),
+              icon: Icon(Icons.credit_card_outlined, color: Color(0xFF752FFF)),
               label: "Package",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.add_circle_sharp, color: Color(0xFF752FFF)),
               label: "Trainer",
             ),
-
+            BottomNavigationBarItem(
+              icon: Icon(Icons.supervised_user_circle_rounded, color: Color(0xFF752FFF)),
+              label: "Users",
+            ),
             // Add other BottomNavigationBarItems here if needed
           ],
         ),

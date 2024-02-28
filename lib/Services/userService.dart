@@ -8,7 +8,7 @@ class userApiService{
   Future<List<Viewuser>> getUser() async
   {
     var client= http.Client();
-    var apiUrl=Uri.parse("http://localhost:3005/api/member/MemberDetails");
+    var apiUrl=Uri.parse("http://localhost:3006/api/member/MemberDetails");
 
     var response= await client.get(apiUrl);
     if(response.statusCode==200)
@@ -23,7 +23,7 @@ class userApiService{
 
   Future<dynamic> Sentdata(String name,address,dob,age,contactno,emailid,gender,bloodgroup,height,weight,idproof,username,password,status) async {
     var client = http.Client();
-    var apiurl = Uri.parse("http://localhost:3005/api/member/signup");
+    var apiurl = Uri.parse("http://localhost:3006/api/member/signup");
     var response = await client.post(apiurl, headers: <String, String>
     {
       "Content-Type": "application/Json;charset=UTF-8 "
