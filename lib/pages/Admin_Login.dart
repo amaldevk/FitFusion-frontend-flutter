@@ -60,6 +60,7 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
               SizedBox(height: 35,),
               TextField(
+                obscureText:true,
                 controller: password,
                 obscureText: true,
 
