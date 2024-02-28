@@ -2,6 +2,7 @@ import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class SelectPackagePage extends StatefulWidget {
   const SelectPackagePage({Key? key}) : super(key: key);
@@ -20,7 +21,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
 
 
   }
-
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +83,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                                 )
                                             ),
                                             onPressed: (){
+                                             Stri post.packageName
 
                                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
                                         }, child: Text("BUY")),
