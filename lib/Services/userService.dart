@@ -1,9 +1,25 @@
 
 import 'dart:convert';
 
+import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:http/http.dart' as http;
 
 class userApiService{
+  Future<List<Viewuser>> getUser() async
+  {
+    var client= http.Client();
+    var apiUrl=Uri.parse("http://localhost:3005/api/member/MemberDetails");
+
+    var response= await client.get(apiUrl);
+    if(response.statusCode==200)
+    {
+      return viewuserFromJson(response.body);
+    }
+    else
+    {
+      return [];
+    }
+  }
 
   Future<dynamic> Sentdata(String name,address,dob,age,contactno,emailid,gender,bloodgroup,height,weight,idproof,username,password,status) async {
     var client = http.Client();

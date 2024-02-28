@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/pages/Menu.dart';
+import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:flutter/material.dart';
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -97,7 +98,9 @@ class _AdminLoginState extends State<AdminLogin> {
                               borderRadius: BorderRadius.circular(10)
                           )
                       ),
-                      onPressed: (){}, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
+                      onPressed: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>viewUser()));
+                      }, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
               SizedBox(height: 55,)
             ],
           ),
