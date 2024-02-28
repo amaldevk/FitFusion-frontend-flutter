@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:fitfusion_app/pages/Admin_Login.dart';
+import 'package:fitfusion_app/pages/userRegister.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -112,6 +113,7 @@ class _LoginState extends State<Login> {
                 children: [
                   GestureDetector(
                    onTap:(){
+                     Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRegister()));
                     },
                   child: Text("Register",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF).withOpacity(0.7) )),
                   ),
