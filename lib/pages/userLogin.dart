@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
   TextEditingController n2 =new TextEditingController();
 
   void loginCheck() async{
+
     final response = await userApiService().loginApi(n1.text, n2.text);
 
      if(response["status"]=="success"){
@@ -32,7 +33,7 @@ class _LoginState extends State<Login> {
       preferences.setString("userid", userId);
       print("successfull uid"+userId);
 
-     // Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
+     Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
     }
 
     else if(response["status"]=="Invalid user"){

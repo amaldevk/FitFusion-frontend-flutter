@@ -1,8 +1,9 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
+import 'package:fitfusion_app/pages/transactionPage.dart';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectPackagePage extends StatefulWidget {
   const SelectPackagePage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
 
 
   }
-}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,12 +54,12 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                               SizedBox(height: 300,
                                 child: ListTile(
                                   title:Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children:[
 
-                                    Text("${post.packageName}",style: TextStyle(
-                                      color: Colors.black,fontWeight: FontWeight.bold
-                                  ),)]),
+                                        Text("${post.packageName}",style: TextStyle(
+                                            color: Colors.black,fontWeight: FontWeight.bold
+                                        ),)]),
                                   subtitle: Column(
                                     children: [
                                       Text(
@@ -82,11 +83,24 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                                     borderRadius: BorderRadius.circular(4)
                                                 )
                                             ),
-                                            onPressed: (){
-                                             Stri post.packageName
+                                            onPressed: ()async{
+                                                String packageName=post.packageName;
+                                                final response= await PackageApiService().logpack(packageName);
+                                                if(response["status"]=="success"){
+                                                  print("success");
+                                                  String packageId=response["userdata"]["_id"].toString();
+                                                  SharedPreferences.setMockInitialValues({});
+                                                  SharedPreferences preferences=await SharedPreferences.getInstance();
+                                                  preferences.setString("packageid",packageId);
+                                                  print(packageId);
+                                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
+                                                }
+                                               else
+                                                 {
+                                                   print("invalid");
+                                                 }
 
-                                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
-                                        }, child: Text("BUY")),
+                                            }, child: Text("BUY")),
                                       )
                                     ],
                                   ),
