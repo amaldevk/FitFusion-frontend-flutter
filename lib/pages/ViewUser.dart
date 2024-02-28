@@ -46,7 +46,7 @@ class _viewUserState extends State<viewUser> {
                   Viewuser user = snapshot.data![index];
 
                   return Card(
-                    color: user.paymentStatus == PaymentStatus.PAID
+                    color: user.paymentStatus == PaymentStatus.SUCCESS
                         ? Colors.white.withOpacity(0.9)
                         : Colors.white.withOpacity(0.9),
                     child: Column(
@@ -54,7 +54,7 @@ class _viewUserState extends State<viewUser> {
                         ListTile(
                           leading: CircleAvatar(
                             radius: 27,
-                            backgroundColor: user.paymentStatus == PaymentStatus.PAID
+                            backgroundColor: user.paymentStatus == PaymentStatus.SUCCESS
                                 ? Colors.lightGreen
                                 : Color(0xFF000066),
                             child: Text(
@@ -71,7 +71,7 @@ class _viewUserState extends State<viewUser> {
                             style: TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
-                              color: user.paymentStatus == PaymentStatus.PAID
+                              color: user.paymentStatus == PaymentStatus.SUCCESS
                                   ? Colors.lightGreen
                                   : Color(0xFF000066),
                             ),
@@ -90,7 +90,7 @@ class _viewUserState extends State<viewUser> {
                                 user.bloodgroup,
                             style: TextStyle(
                               fontSize: 16,
-                              color: user.paymentStatus == PaymentStatus.PAID
+                              color: user.paymentStatus == PaymentStatus.SUCCESS
                                   ? Colors.lightGreen
                                   : null,
                             ),

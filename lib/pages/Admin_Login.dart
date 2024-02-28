@@ -99,7 +99,7 @@ class _AdminLoginState extends State<AdminLogin> {
                           )
                       ),
                       onPressed: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>viewUser()));
+
                       }, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
               SizedBox(height: 55,)
             ],
