@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/pages/Admin_Login.dart';
 import 'package:fitfusion_app/pages/userLogin.dart';
+import 'package:fitfusion_app/pages/userRegister.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class home extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AdminLogin(),
+      home: UserRegister(),
     );
   }
 }
