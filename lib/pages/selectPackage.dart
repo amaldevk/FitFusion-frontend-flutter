@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
+import 'package:fitfusion_app/pages/transactionPage.dart';
 
 import 'package:flutter/material.dart';
 
@@ -17,6 +18,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
   void initState() {
     super.initState();
     data = PackageApiService().getPackageApi();
+    print(data);
 
 
   }
@@ -81,9 +83,10 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                                     borderRadius: BorderRadius.circular(4)
                                                 )
                                             ),
-                                            onPressed: (){
+                                            onPressed: ()async{
+                                              String userid=post.packageName;
 
-                                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
                                         }, child: Text("BUY")),
                                       )
                                     ],

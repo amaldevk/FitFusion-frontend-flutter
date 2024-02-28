@@ -6,7 +6,7 @@ class PackageApiService {
   Future<dynamic> addPackageApi(String packageName,String price,String duration) async
   {
     var client =http.Client();
-    var apiUrl= Uri.parse("http://localhost:3006/api/packages/addpackage");
+    var apiUrl= Uri.parse("http://192.168.183.53:3006/api/packages/addpackage");
 
     var response =await client.post(apiUrl,
         headers: <String,String>{
@@ -30,7 +30,7 @@ class PackageApiService {
 
   Future<List<Package>> getPackageApi() async {
     var client = http.Client();
-    var apiUrl = Uri.parse("http://localhost:3006/api/packages/viewpackage");
+    var apiUrl = Uri.parse("http://192.168.183.53:3006/api/packages/viewpackage");
 
     var response = await client.get(apiUrl);
     if (response.statusCode == 200) {

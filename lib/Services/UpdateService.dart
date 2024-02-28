@@ -5,7 +5,7 @@ class UserService {
   Future<String> updatePaymentStatus(String email, String paymentStatus) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:3006/api/member/update'),
+        Uri.parse('http://192.168.183.53:3006/api/member/update'),
         headers: <String, String>{
           'Content-Type': 'application/json',
         },

@@ -63,7 +63,6 @@ class _AdminLoginState extends State<AdminLogin> {
               TextField(
                 obscureText:true,
                 controller: password,
-                obscureText: true,
 
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
