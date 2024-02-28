@@ -87,18 +87,6 @@ class _AdminLoginState extends State<AdminLogin> {
                     onPressed: checkCredential,
                     child: Text("SIGN IN")),
               ),
-              SizedBox(height: 75,),
-              SizedBox(
-                  height: 45,
-                  width: 350,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          side: BorderSide(color: Colors.white),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)
-                          )
-                      ),
-                      onPressed: (){}, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
               SizedBox(height: 55,)
             ],
           ),
