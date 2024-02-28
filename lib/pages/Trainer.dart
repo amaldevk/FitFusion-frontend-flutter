@@ -1,3 +1,4 @@
+
 import 'package:fitfusion_app/Services/TrainerService.dart';
 import 'package:fitfusion_app/pages/ViewTrainers.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,8 @@ class _Add_TrainerState extends State<Add_Trainer> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {Navigator.pop(context);},
+            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Package'),
         backgroundColor:Color(0xFF752FFF),
         title: Text("Trainers",style: TextStyle(color: Colors.white),),
         actions: <Widget>[

@@ -23,7 +23,7 @@ class _View_TrainerState extends State<View_Trainer> {
         backgroundColor:Color(0xFF752FFF),
         title: Text("View Trainer",style: TextStyle(color: Colors.white),),
         leading: IconButton(onPressed: () {Navigator.pop(context);},
-            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Package'),
+            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Trainer'),
       ),
       body:  FutureBuilder(
           future: data,

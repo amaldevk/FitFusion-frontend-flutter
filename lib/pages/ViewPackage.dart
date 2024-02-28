@@ -1,4 +1,3 @@
-
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +27,16 @@ class _View_PackageState extends State<View_Package> {
       ),
       body: FutureBuilder(
           future: data,
-          builder: (context,snapshot){
-            if(snapshot.hasData && snapshot.data!.isNotEmpty)
-            {
+          builder: (context,AsyncSnapshot<List<Package>> snapshot){
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else if (snapshot.hasData)            {
               return ListView.builder(
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context,index){
@@ -39,11 +45,11 @@ class _View_PackageState extends State<View_Package> {
                       child: Column(
                         children: [
                           ListTile(
-                            title: Text("Package Name:"+snapshot.data![index].packageName,style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Color(0xFF000066)),
+                            title: Text("Package Name:"+snapshot.data![index].packageName.toString(),style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Color(0xFF000066)),
                             ),
-                            subtitle: Text("Price:"+snapshot.data![index].price
-                                +"\n"+"Duration:"+snapshot.data![index].duration
-                                +"\n"+"Description:"+snapshot.data![index].description
+                            subtitle: Text("Price:"+snapshot.data![index].price.toString()
+                                +"\n"+"Duration:"+snapshot.data![index].duration.toString()
+                                +"\n"+"description:"+snapshot.data![index].description.toString()
                               ,style:TextStyle(fontSize: 16) ,
                             ),
                           ),

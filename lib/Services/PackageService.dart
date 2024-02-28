@@ -25,7 +25,7 @@ class PackageApiService {
     }
     else
     {
-      throw Exception("failed to add");
+      throw Exception("failed to add Package");
     }
   }
 
@@ -38,7 +38,7 @@ class PackageApiService {
       return packageFromJson(response.body);
     }
     else {
-      return [];
+      throw Exception("Failed to fetch packages");
     }
   }
 

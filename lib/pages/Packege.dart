@@ -1,6 +1,6 @@
-
 import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/pages/ViewPackage.dart';
+import 'package:fitfusion_app/pages/ViewTrainers.dart';
 import 'package:flutter/material.dart';
 class Add_Packege extends StatefulWidget {
   const Add_Packege({super.key});
@@ -36,6 +36,8 @@ class _Add_PackegeState extends State<Add_Packege> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: () {Navigator.pop(context);},
+            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Package'),
         backgroundColor:Color(0xFF752FFF),
         title: Text("Packages",style: TextStyle(color: Colors.white),),
         actions: <Widget>[
