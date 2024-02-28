@@ -31,7 +31,7 @@ class PackageApiService {
 
   Future<List<Package>> getPackageApi() async {
     var client = http.Client();
-    var apiUrl = Uri.parse("http://localhost:3006/api/packages/viewpackage");
+    var apiUrl = Uri.parse("http:// 192.168.183.53:3006/api/packages/viewpackage");
 
     var response = await client.get(apiUrl);
     if (response.statusCode == 200) {
