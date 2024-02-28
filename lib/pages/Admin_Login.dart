@@ -98,9 +98,7 @@ class _AdminLoginState extends State<AdminLogin> {
                               borderRadius: BorderRadius.circular(10)
                           )
                       ),
-                      onPressed: (){
-
-                      }, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
+                      onPressed: (){}, child: Text("Sign in as Member",style: TextStyle(fontSize: 20)))),
               SizedBox(height: 55,)
             ],
           ),
