@@ -11,13 +11,15 @@ class _Add_PackegeState extends State<Add_Packege> {
   TextEditingController packageName=new TextEditingController();
   TextEditingController price=new TextEditingController();
   TextEditingController duration=new TextEditingController();
+  TextEditingController description=new TextEditingController();
 
   void SendValuesToApiAddPackage() async {
 
     final response = await PackageApiService().addPackageApi(
         packageName.text,
         price.text,
-        duration.text);
+        duration.text,
+        description.text);
 
     if(response["status"]=="success")
     {
@@ -74,6 +76,15 @@ class _Add_PackegeState extends State<Add_Packege> {
                 decoration: InputDecoration(
                     labelText: "Duration",
                     hintText: "Enter Duration",
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
+                ),
+              ),
+              SizedBox(height: 25,),
+              TextField(
+                controller: description,
+                decoration: InputDecoration(
+                    labelText: "description",
+                    hintText: "Enter description ",
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(10))
                 ),
               ),

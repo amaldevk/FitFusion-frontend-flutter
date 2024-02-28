@@ -3,7 +3,7 @@ import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:http/http.dart' as http;
 
 class PackageApiService {
-  Future<dynamic> addPackageApi(String packageName,String price,String duration) async
+  Future<dynamic> addPackageApi(String packageName,String price,String duration,String description) async
   {
     var client =http.Client();
     var apiUrl= Uri.parse("http://localhost:3006/api/packages/addpackage");
@@ -15,7 +15,8 @@ class PackageApiService {
         body: jsonEncode(<String,String>{
           "packageName": packageName,
           "price": price,
-          "duration": duration
+          "duration": duration,
+          "description": description
         })
     );
     if(response.statusCode==200)
