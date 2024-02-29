@@ -1,5 +1,4 @@
-import 'package:fitfusion_app/pages/Menu.dart';
-//import 'package:fitfusion_app/pages/ViewUser.dart';
+import 'package:fitfusion_app/pages/Update.dart';
 import 'package:flutter/material.dart';
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -15,7 +14,7 @@ class _AdminLoginState extends State<AdminLogin> {
   void checkCredential(){
     if(username.text == "admin" && password.text=="admin" ){
       print("successful login");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
     }
     else{
       print("Incorrect username or password");
@@ -34,7 +33,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   end: Alignment.bottomRight,
                   colors: [
                     Color(0xE4B7B8EA),
-                    Color(0xFF5E06E3).withOpacity(0.3)
+                    Color(0xFF5E06E3)
                   ]
               )
           ),
@@ -61,19 +60,15 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
               SizedBox(height: 35,),
               TextField(
-                obscureText:true,
+                obscureText: true,
                 controller: password,
-
-
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     labelText: "Password",
                     hintText: "Enter admin password",
-                    suffixIcon: Icon(Icons.key),
                     labelStyle: TextStyle(color: Colors.white),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-
+                        borderSide: BorderSide(color: Colors.white)
                     )
                 ),
               ),
@@ -92,7 +87,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     onPressed: checkCredential,
                     child: Text("SIGN IN")),
               ),
-
+              SizedBox(height: 55,)
             ],
           ),
         ),

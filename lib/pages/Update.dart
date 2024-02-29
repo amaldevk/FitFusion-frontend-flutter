@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/Services/UpdateService.dart';
+import 'package:fitfusion_app/pages/Menu.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,7 +24,7 @@ class _UpdatePaymentState extends State<UpdatePayment> {
           content: Text(status),
           actions: <Widget>[
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MenuPage())),
               child: Text('OK'),
             ),
           ],
@@ -49,8 +50,9 @@ class _UpdatePaymentState extends State<UpdatePayment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple.shade100,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(80),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
