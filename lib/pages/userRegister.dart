@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 class UserRegister extends StatefulWidget {
   const UserRegister({Key? key}) : super(key: key);
 
@@ -33,7 +34,7 @@ class _UserRegisterState extends State<UserRegister> {
 
     if (picked != null && picked != DateTime.now()) {
       setState(() {
-        dob.text = DateFormat('yyyy-MM-dd').format(picked);
+        dob.text = DateFormat('yyyy-MM-dd').format(picked); // Using DateFormat here
         _calculateAge(picked);
       });
     }
