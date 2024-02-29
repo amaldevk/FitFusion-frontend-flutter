@@ -1,3 +1,4 @@
+import 'package:fitfusion_app/pages/Menu.dart';
 import 'package:fitfusion_app/pages/Update.dart';
 import 'package:flutter/material.dart';
 class AdminLogin extends StatefulWidget {
@@ -14,7 +15,7 @@ class _AdminLoginState extends State<AdminLogin> {
   void checkCredential(){
     if(username.text == "admin" && password.text=="admin" ){
       print("successful login");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuPage()));
     }
     else{
       print("Incorrect username or password");
