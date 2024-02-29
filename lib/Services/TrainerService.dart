@@ -29,15 +29,17 @@ class TrainerApiService{
     }
   }
   Future<List<Trainer>> getTrainerApi() async {
-    var client = http.Client();
-    var apiUrl = Uri.parse("http://localhost:3006/api/trainer/viewtrainers");
+    try {
+      var apiUrl = Uri.parse("http://localhost:3006/api/trainer/viewtrainers");
+      var response = await http.get(apiUrl);
 
-    var response = await client.get(apiUrl);
-    if (response.statusCode == 200) {
-      return trainerFromJson(response.body);
-    }
-    else {
-      return [];
+      if (response.statusCode == 200) {
+        return trainerFromJson(response.body);
+      } else {
+        throw Exception("Failed to fetch trainers");
+      }
+    } catch (error) {
+      throw Exception("Failed to fetch trainers: $error");
     }
   }
 }

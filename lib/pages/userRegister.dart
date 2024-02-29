@@ -1,7 +1,5 @@
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 class UserRegister extends StatefulWidget {
   const UserRegister({Key? key}) : super(key: key);
 
