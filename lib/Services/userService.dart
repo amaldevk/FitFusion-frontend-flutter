@@ -20,7 +20,7 @@ class userApiService{
       return [];
     }
   }
-
+ 
   Future<dynamic> Sentdata(String name,address,dob,age,contactno,emailid,gender,bloodgroup,height,weight,idproof,username,password,status) async {
     var client = http.Client();
     var apiurl = Uri.parse("http://localhost:3006/api/member/signup");
