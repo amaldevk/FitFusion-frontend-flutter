@@ -12,26 +12,26 @@ class Package {
   String packageName;
   String price;
   String duration;
-  String description;
+ // String description;
 
   Package({
     required this.packageName,
     required this.price,
     required this.duration,
-    required this.description,
+   // required this.description,
   });
 
   factory Package.fromJson(Map<String, dynamic> json) => Package(
     packageName: json["packageName"],
     price: json["price"],
     duration: json["duration"],
-    description: json["description"],
+   // description: json["description"],
   );
 
   Map<String, dynamic> toJson() => {
     "packageName": packageName,
     "price": price,
     "duration": duration,
-    "description": description,
+  //  "description": description,
   };
 }

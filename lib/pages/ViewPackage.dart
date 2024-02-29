@@ -43,7 +43,7 @@ class _View_PackageState extends State<View_Package> {
                             ),
                             subtitle: Text("Price:"+snapshot.data![index].price
                                 +"\n"+"Duration:"+snapshot.data![index].duration
-                                +"\n"+"Description:"+snapshot.data![index].description
+                            //    +"\n"+"Description:"+snapshot.data![index].description
                               ,style:TextStyle(fontSize: 16) ,
                             ),
                           ),

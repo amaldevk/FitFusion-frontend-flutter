@@ -8,7 +8,7 @@ class userApiService{
   Future<List<Viewuser>> getUser() async
   {
     var client= http.Client();
-    var apiUrl=Uri.parse("http://localhost:3006/api/member/MemberDetails");
+    var apiUrl=Uri.parse("http://192.168.183.53:3006/api/member/MemberDetails");
 
     var response= await client.get(apiUrl);
     if(response.statusCode==200)

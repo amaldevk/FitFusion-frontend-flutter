@@ -6,7 +6,7 @@ class TrainerApiService{
   Future<dynamic> addTrainerApi(String name,String gender,String phnno,String address,String experience) async
   {
     var client =http.Client();
-    var apiUrl= Uri.parse("http://localhost:3006/api/trainer/addtrainer");
+    var apiUrl= Uri.parse("http://192.168.183.53:3006/api/trainer/addtrainer");
     var response =await client.post(apiUrl,
         headers: <String,String>{
           "Content-Type" : "application/json; charset=UTF-8"
@@ -30,7 +30,7 @@ class TrainerApiService{
   }
   Future<List<Trainer>> getTrainerApi() async {
     var client = http.Client();
-    var apiUrl = Uri.parse("http://localhost:3006/api/trainer/viewtrainers");
+    var apiUrl = Uri.parse("http://192.168.183.53:3006/api/trainer/viewtrainers");
 
     var response = await client.get(apiUrl);
     if (response.statusCode == 200) {

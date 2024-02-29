@@ -1,5 +1,7 @@
 
+import 'package:fitfusion_app/Services/transactionServices.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class transactionPage extends StatefulWidget {
   const transactionPage({Key? key}) : super(key: key);
@@ -10,7 +12,27 @@ class transactionPage extends StatefulWidget {
 
 class _transactionPage extends State<transactionPage> {
 
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
 
+  }
+
+void sendmoney()async
+{
+  SharedPreferences prefer = await SharedPreferences.getInstance();
+  String PackageId =prefer.getString("packageid") ?? "";
+  SharedPreferences prefer2= await SharedPreferences.getInstance();
+  String userId = prefer2.getString("userid") ?? "";
+  final response = await PostApiService().sendData(userId, PackageId);
+  if (response["status"] == "success") {
+    print("Transaction added");
+  }
+  else {
+    print("Payment Failed!!");
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
