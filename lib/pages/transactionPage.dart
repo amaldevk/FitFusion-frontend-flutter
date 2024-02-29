@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/Services/transactionservice.dart';
+import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,6 +42,20 @@ class _transactionPage extends State<transactionPage> {
     } else {
       print("Payment Failed!!");
     }
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text('Payment Successfull',
+          style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
+        content: Image.asset('assets/successGiff.gif'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage())),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -48,7 +63,8 @@ class _transactionPage extends State<transactionPage> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text("PAYMENT"),
+        title: Text("PAYMENT",
+          style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
         backgroundColor: Color(0xFF752FFF),
       ),
       body:SingleChildScrollView(

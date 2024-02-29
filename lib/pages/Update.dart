@@ -21,7 +21,7 @@ class _UpdatePaymentState extends State<UpdatePayment> {
         context: context,
         builder: (_) => AlertDialog(
           title: Text('Status'),
-          content: Text(status),
+          content: Image.asset('assets/successGiff.gif'),
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => MenuPage())),
