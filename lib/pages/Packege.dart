@@ -37,7 +37,7 @@ class _Add_PackegeState extends State<Add_Packege> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {Navigator.pop(context);},
-            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Package'),
+            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white)),
         backgroundColor:Color(0xFF752FFF),
         title: Text("Packages",style: TextStyle(color: Colors.white),),
         actions: <Widget>[

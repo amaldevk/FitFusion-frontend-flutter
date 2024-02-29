@@ -9,18 +9,18 @@ List<Trainer> trainerFromJson(String str) => List<Trainer>.from(json.decode(str)
 String trainerToJson(List<Trainer> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Trainer {
-  String name;
-  String gender;
-  String phnno;
-  String address;
-  String experience;
+  String? name;
+  String? gender;
+  String? phnno;
+  String? address;
+  String? experience;
 
   Trainer({
-    required this.name,
-    required this.gender,
-    required this.phnno,
-    required this.address,
-    required this.experience,
+    this.name,
+    this.gender,
+    this.phnno,
+    this.address,
+    this.experience,
   });
 
   factory Trainer.fromJson(Map<String, dynamic> json) => Trainer(

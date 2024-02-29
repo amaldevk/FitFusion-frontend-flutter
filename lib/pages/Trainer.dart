@@ -39,7 +39,7 @@ class _Add_TrainerState extends State<Add_Trainer> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () {Navigator.pop(context);},
-            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white),tooltip: 'View Package'),
+            icon: Icon(Icons.arrow_back_ios_sharp,color: Colors.white)),
         backgroundColor:Color(0xFF752FFF),
         title: Text("Trainers",style: TextStyle(color: Colors.white),),
         actions: <Widget>[
