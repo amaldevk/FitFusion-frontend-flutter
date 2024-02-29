@@ -1,43 +1,41 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-
+import 'package:fitfusion_app/Services/userService.dart';
+import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class SelectPackagePage extends StatefulWidget {
-  const SelectPackagePage({Key? key}) : super(key: key);
+class selectPackagepage extends StatefulWidget {
+  const selectPackagepage({super.key});
 
   @override
-  State<SelectPackagePage> createState() => _SelectPackagePageState();
+  State<selectPackagepage> createState() => _selectPackagepageState();
 }
 
-class _SelectPackagePageState extends State<SelectPackagePage> {
+class _selectPackagepageState extends State<selectPackagepage> {
   late Future<List<Package>> data;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     data = PackageApiService().getPackageApi();
-
-
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Packages"),
-        backgroundColor: Color(0xFF752FFF),
+        title: Text("PACKAGES"),
       ),
       body: Column(
         children: [
           Container(
             height: 350,
             color: Colors.black,
-
             child: FutureBuilder<List<Package>>(
               future: data,
-              builder: (context, snapshot) {
+              builder: (context,snapshot) {
                 if (snapshot.hasData && snapshot.data!.isNotEmpty) {
                   return ListView(
                     scrollDirection: Axis.horizontal,
@@ -52,12 +50,12 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                               SizedBox(height: 300,
                                 child: ListTile(
                                   title:Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children:[
 
-                                    Text("${post.packageName}",style: TextStyle(
-                                      color: Colors.black,fontWeight: FontWeight.bold
-                                  ),)]),
+                                        Text("${post.packageName}",style: TextStyle(
+                                            color: Colors.black,fontWeight: FontWeight.bold
+                                        ),)]),
                                   subtitle: Column(
                                     children: [
                                       Text(
@@ -81,10 +79,24 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                                     borderRadius: BorderRadius.circular(4)
                                                 )
                                             ),
-                                            onPressed: (){
+                                            onPressed: ()async{
+                                              String packageName=post.packageName;
+                                              final response= await PackageApiService().logpack(packageName);
+                                              if(response["status"]=="success"){
+                                                print("success");
+                                                String packageId=response["userdata"]["_id"].toString();
+                                                SharedPreferences.setMockInitialValues({});
+                                                SharedPreferences preferences=await SharedPreferences.getInstance();
+                                                preferences.setString("packageid",packageId);
+                                                print(packageId);
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
+                                              }
+                                              else
+                                              {
+                                                print("invalid");
+                                              }
 
-                                         // Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
-                                        }, child: Text("BUY")),
+                                            }, child: Text("BUY")),
                                       )
                                     ],
                                   ),
@@ -98,6 +110,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                   );
 
                 } else {
+                  print(data);
                   return Center(
                     child: CircularProgressIndicator(),
                   );
