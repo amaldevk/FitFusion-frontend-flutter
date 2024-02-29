@@ -1,5 +1,7 @@
 
+import 'package:fitfusion_app/Services/transactionservice.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class transactionPage extends StatefulWidget {
   const transactionPage({Key? key}) : super(key: key);
@@ -9,7 +11,38 @@ class transactionPage extends StatefulWidget {
 }
 
 class _transactionPage extends State<transactionPage> {
+  late Future<String> userID;
+  @override
+  void initState() {
+    super.initState();
+    _fetchIds();
+  }
 
+  Future<void> _fetchIds() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userID = Future.value(preferences.getString("UserID") ?? "Unknown");
+    });
+  }
+
+
+  void sendmoney() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String userId = preferences.getString("UserID") ?? "";
+
+    SharedPreferences prefer = await SharedPreferences.getInstance();
+    String packageId = prefer.getString("packageid") ?? "";
+
+    print(userId);
+    print(packageId);
+
+    final response = await PostApiService().sendData(userId, packageId);
+    if (response["status"] == "success") {
+      print("Transaction added");
+    } else {
+      print("Payment Failed!!");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +77,18 @@ class _transactionPage extends State<transactionPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 20,),
+                          SizedBox(height: 20),
 
+                          FutureBuilder<String>(
+                            future: userID,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('User ID: ${snapshot.data}');
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            },
+                          ),
                           SizedBox(
                             height: 55,
                           ),
@@ -53,6 +97,7 @@ class _transactionPage extends State<transactionPage> {
                             width: 450,
                             child: Center(child:Text("AMOUNT")),
                           ),
+
                           SizedBox(
                             height: 15,
                           ),
@@ -75,9 +120,7 @@ class _transactionPage extends State<transactionPage> {
                                     foregroundColor: Colors.white,
                                     backgroundColor: Color(0xFF752FFF),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))
-                                ),onPressed:(){
-
-                            }, child: Text("Make payment")),
+                                ),onPressed:sendmoney, child: Text("Make payment")),
                           ),
                           SizedBox(
                             height: 55,
@@ -92,10 +135,9 @@ class _transactionPage extends State<transactionPage> {
                                   ),onPressed: ()
                               {
                                 //Navigator.push(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
-                              }, child: Text("Secure"))
+                              }, child: Text("Secure")),
                             ],
                           )
-
                         ],
                       )
                   ),
@@ -108,3 +150,4 @@ class _transactionPage extends State<transactionPage> {
     );
   }
 }
+
