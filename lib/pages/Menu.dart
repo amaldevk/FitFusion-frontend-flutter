@@ -14,7 +14,7 @@ class MenuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text("ADMIN PAGE"),
+        appBar: AppBar(title: Text("ADMIN ",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
             backgroundColor: Color(0xFF752FFF),
         foregroundColor: Colors.white,),
         drawer: Drawer(

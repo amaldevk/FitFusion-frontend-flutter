@@ -37,7 +37,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xFF752FFF),
-        title: Text("PACKAGES"),
+        title: Text("PACKAGES",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
@@ -69,6 +69,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
+                                          fontSize: 15
                                         ),
                                       ),
                                     ],
@@ -76,7 +77,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                   subtitle: Column(
                                     children: [
                                       Text(
-                                        "${post.price}",
+                                        "₹ ${post.price}",
                                         style: TextStyle(
                                           color: Color(0xFF752FFF),
                                           fontWeight: FontWeight.bold,
@@ -85,6 +86,14 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                       ),
                                       Text(
                                         "\n ${post.duration}\n\n",
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        "\n ${post.description}\n\n",
+                                        textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
