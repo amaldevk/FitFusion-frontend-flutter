@@ -1,57 +1,61 @@
 import 'package:fitfusion_app/pages/Packege.dart';
 import 'package:fitfusion_app/pages/Trainer.dart';
+import 'package:fitfusion_app/pages/Update.dart';
+import 'package:fitfusion_app/pages/ViewPackage.dart';
+import 'package:fitfusion_app/pages/ViewTrainers.dart';
 import 'package:fitfusion_app/pages/ViewUser.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:flutter/material.dart';
-void main() {
-  runApp(MenuPage());
-}
 
-class MenuPage extends StatefulWidget {
+class MenuPage extends StatelessWidget {
   const MenuPage({super.key});
-  @override
-  _MenuPageState createState() => _MenuPageState();
-}
-
-class _MenuPageState extends State<MenuPage> {
-  int currentIndex = 0; // Added currentIndex variable
-  final List<Widget> pages = [
-    Add_Packege(),
-    Add_Trainer(),
-    viewUser()
-  ];
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: pages[currentIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (index) {
-            print(index);
-            setState(() {
-              currentIndex = index;
-            });
-          },
-          currentIndex: currentIndex,
-          selectedItemColor: Color(0xFF000066),
-          unselectedItemColor: Colors.black,//
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.credit_card_outlined, color: Color(0xFF752FFF)),
-              label: "Package",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_sharp, color: Color(0xFF752FFF)),
-              label: "Trainer",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle_rounded, color: Color(0xFF752FFF)),
-              label: "Users",
-            ),
-            // Add other BottomNavigationBarItems here if needed
-          ],
+        appBar: AppBar(title: Text("ADMIN PAGE"),
+            backgroundColor: Color(0xFF752FFF),
+        foregroundColor: Colors.white,),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: Colors.deepPurpleAccent
+                  ),
+                  child: Text("MY LIST",style: TextStyle(fontSize: 15,color: Colors.white),),),
+              ListTile(title: const Text("ADD PACKAGES"),
+                onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Packege()));
+                },),
+              ListTile(title: const Text("ADD TRAINERS"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Trainer()));
+                },),
+              ListTile(title: const Text("VIEW USER"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>viewUser()));
+                },),
+              ListTile(title: const Text("VIEW PACKAGE"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>View_Package()));
+                },),
+              ListTile(title: const Text("VIEW TRAINER"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>View_Trainer()));
+                },),
+              ListTile(title: const Text("SEARCH USER"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchUser()));
+                },),
+              ListTile(title: const Text("UPDATE PAYMENT"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
+                },)
+            ],
+          ),
         ),
       ),
     );
