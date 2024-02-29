@@ -5,6 +5,30 @@ import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:http/http.dart' as http;
 
 class userApiService{
+
+  Future<dynamic> getSeruser(String name) async {
+  var client = http.Client();
+  var apiUrl = Uri.parse("http://localhost:3006/api/member/search");
+
+  try {
+  var response = await client.post(
+  apiUrl,
+  body: jsonEncode({"name": name}),
+  headers: {
+  "Content-Type": "application/json",
+  },
+  );
+
+  if (response.statusCode == 200) {
+  return json.decode(response.body);
+  } else {
+  throw Exception("Invalid user");
+  }
+  } finally {
+  client.close();
+  }
+  }
+
   Future<List<Viewuser>> getUser() async
   {
     var client= http.Client();

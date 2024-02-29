@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:fitfusion_app/pages/Admin_Login.dart';
+import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:fitfusion_app/pages/userRegister.dart';
 import 'package:flutter/material.dart';
