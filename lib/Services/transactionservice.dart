@@ -10,7 +10,7 @@ class PostApiService
       ) async
   {
     var client = http.Client();
-    var apiUri = Uri.parse("http://localhost:3006/api/post/post");
+    var apiUri = Uri.parse("http://localhost:3006/api/tran/transpost");
     var response = await client.post(apiUri,
       headers: <String,String>
       {
@@ -37,7 +37,7 @@ class PostApiService
   Future<List<Post2>> getData() async
   {
     var client = http.Client();
-    var apiUri = Uri.parse("http://local:3006/api/post/view");
+    var apiUri = Uri.parse("http://local:3006/api/tran/viewuser");
     var response = await client.get(apiUri);
     if(response.statusCode == 200)
     {

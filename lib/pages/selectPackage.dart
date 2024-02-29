@@ -88,7 +88,6 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                                 SharedPreferences.setMockInitialValues({});
                                                 SharedPreferences preferences=await SharedPreferences.getInstance();
                                                 preferences.setString("packageid",packageId);
-                                                print(packageId);
                                                 Navigator.push(context, MaterialPageRoute(builder: (context)=>transactionPage()));
                                               }
                                               else

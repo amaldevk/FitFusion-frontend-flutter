@@ -11,12 +11,6 @@ class transactionPage extends StatefulWidget {
 
 class _transactionPage extends State<transactionPage> {
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-  }
 
   void sendmoney()async
   {
@@ -24,7 +18,9 @@ class _transactionPage extends State<transactionPage> {
     String PackageId =prefer.getString("packageid") ?? "";
     SharedPreferences prefer2= await SharedPreferences.getInstance();
     String userId = prefer2.getString("userid") ?? "";
-    final response = await PostApiService().sendData(userId, PackageId);
+    print(userId);
+    print(PackageId);
+    final response = await PostApiService().sendData(userId,PackageId);
     if (response["status"] == "success") {
       print("Transaction added");
     }
@@ -96,9 +92,7 @@ class _transactionPage extends State<transactionPage> {
                                     foregroundColor: Colors.white,
                                     backgroundColor: Color(0xFF752FFF),
                                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))
-                                ),onPressed:(){
-
-                            }, child: Text("Make payment")),
+                                ),onPressed:sendmoney, child: Text("Make payment")),
                           ),
                           SizedBox(
                             height: 55,
