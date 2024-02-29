@@ -79,7 +79,7 @@ class _View_TrainerState extends State<View_Trainer> {
               },
             );
           } else {
-            return Center(child: Text('No data available'));
+            return CircularProgressIndicator();
           }
         },
       ),
