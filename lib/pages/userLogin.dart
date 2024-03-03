@@ -37,7 +37,7 @@ class _LoginState extends State<Login> {
 
     else if(response["status"]=="Invalid user"){
       setState(() {
-        message="Invalid username";
+        message="Invalid emailID";
       });
     }
     else if(response["status"]=="Incorrect password"){
@@ -71,7 +71,7 @@ class _LoginState extends State<Login> {
                 controller: n1,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: "Username",
+                  hintText: "EmailID",
                   fillColor: Color(0xFF0dadae0).withOpacity(0.2),
                   filled: true,
                 ),

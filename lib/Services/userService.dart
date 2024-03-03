@@ -79,7 +79,7 @@ class userApiService{
   }
 
 
-  Future<dynamic> loginApi(String userName ,String password) async{
+  Future<dynamic> loginApi(String email ,String password) async{
 
     var client =http.Client();
     var url = Uri.parse("http://localhost:3006/api/member/login");
@@ -88,7 +88,7 @@ class userApiService{
           "Content-Type" :"application/json ; charset=UTF-8"
         },
         body: jsonEncode(<String,String>{
-          "username": userName,
+          "emailid": email,
           "password": password,
         })
     );
