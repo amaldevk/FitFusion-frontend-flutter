@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/Services/userService.dart';
+import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 
@@ -35,7 +36,14 @@ class _viewUserState extends State<viewUser> {
             icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
             tooltip: 'View Package',
           ),
-        ),
+            actions: [
+            IconButton(
+            onPressed: () {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => SearchUser()));
+      },
+        icon: Icon(Icons.search, color: Colors.white),
+        tooltip: 'Search User',
+      )]),
         body: FutureBuilder(
           future: data,
           builder: (context, snapshot) {
