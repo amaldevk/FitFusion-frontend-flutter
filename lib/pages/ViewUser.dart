@@ -22,6 +22,7 @@ class _viewUserState extends State<viewUser> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFF752FFF),
