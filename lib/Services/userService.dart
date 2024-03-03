@@ -29,22 +29,25 @@ class userApiService{
   }
   }
 
-  Future<List<Viewuser>> getUser() async
-  {
-    var client= http.Client();
-    var apiUrl=Uri.parse("http://localhost:3006/api/member/MemberDetails");
+  Future<List<Viewuser>> getUser() async {
+    var client = http.Client();
+    var apiUrl = Uri.parse("http://localhost:3006/api/member/MemberDetails");
 
-    var response= await client.get(apiUrl);
-    if(response.statusCode==200)
-    {
-      return viewuserFromJson(response.body);
-    }
-    else
-    {
-      return [];
+    try {
+      var response = await client.get(apiUrl);
+      if (response.statusCode == 200) {
+        return viewuserFromJson(response.body);
+      } else {
+        throw Exception("Failed to fetch user data");
+      }
+    } catch (e) {
+      print("Error fetching user data: $e");
+      return []; // Return empty list if an error occurs
+    } finally {
+      client.close();
     }
   }
- 
+
   Future<dynamic> Sentdata(String name,address,dob,age,contactno,emailid,gender,bloodgroup,height,weight,idproof,username,password,status) async {
     var client = http.Client();
     var apiurl = Uri.parse("http://localhost:3006/api/member/signup");
