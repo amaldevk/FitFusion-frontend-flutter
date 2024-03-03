@@ -1,8 +1,6 @@
 import 'package:fitfusion_app/pages/Packege.dart';
 import 'package:fitfusion_app/pages/Trainer.dart';
 import 'package:fitfusion_app/pages/Update.dart';
-import 'package:fitfusion_app/pages/ViewPackage.dart';
-import 'package:fitfusion_app/pages/ViewTrainers.dart';
 import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +35,6 @@ class MenuPage extends StatelessWidget {
               ListTile(title: const Text("VIEW USER"),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>viewUser()));
-                },),
-              ListTile(title: const Text("VIEW PACKAGE"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>View_Package()));
-                },),
-              ListTile(title: const Text("VIEW TRAINER"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>View_Trainer()));
                 },),
               ListTile(title: const Text("SEARCH USER"),
                 onTap: (){
