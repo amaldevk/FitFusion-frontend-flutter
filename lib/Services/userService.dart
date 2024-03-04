@@ -80,7 +80,6 @@ class userApiService{
 
 
   Future<dynamic> loginApi(String email ,String password) async{
-
     var client =http.Client();
     var url = Uri.parse("http://localhost:3006/api/member/login");
     var response =await client.post(url,
@@ -100,4 +99,25 @@ class userApiService{
       throw Exception("Fail to send data");
     }
   }
+
+  Future<dynamic> viewProfile(String user_ID) async{
+    var client =http.Client();
+    var url=Uri.parse("http://localhost:3006/api/member/myprofile");
+    try{
+      var response =await client.post(url,
+      body: jsonEncode({"userId":user_ID}),
+      headers:{
+        "Content-Type": "application/json",
+      },
+      );
+      if(response.statusCode == 200){
+        return json.decode(response.body);
+      }
+      else{
+        throw Exception("Invalid");
+      }
+    }
+    finally{client.close();}
+  }
+
 }
