@@ -43,7 +43,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
       body: Column(
         children: [
           Container(
-            height: 350,
+            height: 360,
             color: Colors.black,
             child: FutureBuilder<List<Package>>(
               future: data,
@@ -86,7 +86,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                         ),
                                       ),
                                       Text(
-                                        "\n ${post.duration}\n\n",
+                                        "\n ${post.duration}\n",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
