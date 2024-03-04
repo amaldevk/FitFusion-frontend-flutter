@@ -68,6 +68,7 @@ flutter:
     - assets/Mobile login-rafiki.svg
     - assets/home.png
     - assets/Admin.jpg
+    - assets/successGiff.gif
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
