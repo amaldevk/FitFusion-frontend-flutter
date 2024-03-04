@@ -27,6 +27,17 @@ class _AdminLoginState extends State<AdminLogin> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home:Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFF752FFF),
+          title: Text("Admin", style: TextStyle(color: Colors.white)),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+            tooltip: 'Admin',
+          ),
+        ),
         body: Container(
           decoration: BoxDecoration(
               gradient: LinearGradient(
