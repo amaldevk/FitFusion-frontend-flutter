@@ -68,6 +68,34 @@ class PackageApiService {
       throw Exception("Failed");
     }
   }
+  Future<dynamic> searchpack(String id) async
+  {
+    var client = http.Client();
+    var apiUri = Uri.parse("http://localhost:3006/api/packages/searchpackage");
+    var response = await client.post(apiUri,
+        headers: <String,String>
+        {
+          "Content-Type":"application/json; charset=UTF-8"
+        },
+        body: jsonEncode(<String,String>
+        {
+          "id" : id
+
+        }
+        )
+    );
+
+    if(response.statusCode==200)
+    {
+      var resp = response.body;
+      return jsonDecode(resp);
+    }
+    else
+    {
+      throw Exception("Failed");
+    }
+  }
+
 
 }
 
