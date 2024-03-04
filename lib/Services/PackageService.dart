@@ -69,6 +69,31 @@ class PackageApiService {
     }
   }
 
+  searchpack(String id) async {
+    var client = http.Client();
+    var apiUri = Uri.parse("http://localhost:3006/api/packages/searchpackage");
+    var response = await client.post(
+      apiUri,
+      headers: <String, String>{
+        "Content-Type": "application/json; charset=UTF-8"
+      },
+      body: jsonEncode(<String, String>{"id": id}),
+    );
+
+    if (response.statusCode == 200) {
+      var resp = response.body;
+      var decodedResponse = jsonDecode(resp);
+
+      // Assuming Package.fromJson() method to convert JSON to Package object
+      // Adjust this according to your actual implementation
+      return Package.fromJson(decodedResponse);
+    } else {
+      throw Exception("Failed");
+    }
+  }
+
+
+
 }
 
 

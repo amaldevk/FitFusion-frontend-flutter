@@ -1,3 +1,5 @@
+import 'package:fitfusion_app/Models/PackageModel.dart';
+import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/Services/transactionservice.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +14,9 @@ class transactionPage extends StatefulWidget {
 
 class _transactionPage extends State<transactionPage> {
   late Future<String> userID;
+  List<Package> data=[];
+  String packageId="";
+  String UserID="";
   @override
   void initState() {
     super.initState();
@@ -20,8 +25,11 @@ class _transactionPage extends State<transactionPage> {
 
   Future<void> _fetchIds() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    SharedPreferences prefer = await SharedPreferences.getInstance();
+    packageId = prefer.getString("packageid") ?? "";
     setState(() {
       userID = Future.value(preferences.getString("UserID") ?? "Unknown");
+      data= PackageApiService().searchpack(packageId);
     });
   }
 
@@ -30,8 +38,7 @@ class _transactionPage extends State<transactionPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userId = preferences.getString("UserID") ?? "";
 
-    SharedPreferences prefer = await SharedPreferences.getInstance();
-    String packageId = prefer.getString("packageid") ?? "";
+
 
     print(userId);
     print(packageId);
@@ -110,31 +117,44 @@ class _transactionPage extends State<transactionPage> {
                           SizedBox(
                             height: 50,
                             width: 450,
-                            child: Center(child:Text("AMOUNT")),
-                          ),
+                            child: Center(
+                              child:
+     ListView.builder(
+    itemCount: data.length,
+    itemBuilder: (value,index)
+    {
+    return Card(
+    child:
+    Text("Amount:"+data[index].price)
+    );
+    }
+    )
+                              ),
+                                  ),
 
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            width: 450,
-                            height: 50,
-                            child: Center(child: Text("DUE")),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
+                                  SizedBox(
+                                  height: 15,
+                                  ),
+                                  SizedBox(
+                                  width: 450,
+                                  height: 50,
+                                  child: Center(child: Text("DUE")),
+                                  ),
+                                  SizedBox(
+                                  height: 5,
+                                  ),
 
-                          SizedBox(
-                            height: 15,
-                          ),
-                          SizedBox(
-                            width: 450,
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.white,
-                                    backgroundColor: Color(0xFF752FFF),
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))
+                                  SizedBox(
+                                  height: 15,
+                                  ),
+                                  SizedBox(
+                                  width: 450,
+                                  child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Color(0xFF752FFF),
+                                  shape:
+                                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(4))
                                 ),onPressed:sendmoney, child: Text("Make payment")),
                           ),
                           SizedBox(
