@@ -1,6 +1,7 @@
 import 'package:fitfusion_app/pages/Packege.dart';
 import 'package:fitfusion_app/pages/Trainer.dart';
 import 'package:fitfusion_app/pages/Update.dart';
+import 'package:fitfusion_app/pages/ViewTransaction.dart';
 import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +40,10 @@ class MenuPage extends StatelessWidget {
               ListTile(title: const Text("UPDATE PAYMENT"),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
+                },),
+              ListTile(title: const Text("View Transaction"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewTransactionScreen()));
                 },)
             ],
           ),

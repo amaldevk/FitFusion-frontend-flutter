@@ -42,11 +42,13 @@ class _ViewTransactionScreenState extends State<ViewTransactionScreen> {
                 return Card(
                   color: Colors.white.withOpacity(0.9),
                   child: ListTile(
-                    title: Text('User ID: ${transaction.userid}'),
+                    title: Text('User ID: ${transaction.userid.name}'),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Package ID: ${transaction.packageid}'),
+                        Text('Package ID: ${transaction.packageid.id}'),
+                        Text('Package ID: ${transaction.packageid.duration}'),
+                        Text('Package ID: ${transaction.packageid.price}'),
                         Text('Post Date: ${transaction.postdate}'),
                       ],
                     ),
