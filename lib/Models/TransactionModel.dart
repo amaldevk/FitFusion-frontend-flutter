@@ -9,25 +9,73 @@ List<Post2> post2FromJson(String str) => List<Post2>.from(json.decode(str).map((
 String post2ToJson(List<Post2> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Post2 {
-  String userid;
-  String packageid;
-  DateTime postdate;
+  String? id;
+  User? userid;
+  Package? packageid;
+  DateTime? postdate;
 
   Post2({
-    required this.userid,
-    required this.packageid,
-    required this.postdate,
+    this.id,
+    this.userid,
+    this.packageid,
+    this.postdate,
   });
 
   factory Post2.fromJson(Map<String, dynamic> json) => Post2(
-    userid: json["userid"],
-    packageid: json["packageid"],
+    id: json["_id"],
+    userid: User.fromJson(json["userid"]),
+    packageid: Package.fromJson(json["packageid"]),
     postdate: DateTime.parse(json["postdate"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "userid": userid,
-    "packageid": packageid,
-    "postdate": postdate.toIso8601String(),
+    "_id": id,
+    "userid": userid?.toJson(),
+    "packageid": packageid?.toJson(),
+    "postdate": postdate?.toIso8601String(),
+  };
+}
+
+class User {
+  String? id;
+  String? name;
+
+  User({
+    this.id,
+    this.name,
+  });
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["_id"],
+    name: json["name"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "name": name,
+  };
+}
+
+class Package {
+  String? id;
+  String? price;
+  String? duration;
+
+  Package({
+    this.id,
+    this.price,
+    this.duration,
+  });
+
+  factory Package.fromJson(Map<String, dynamic> json) => Package(
+    id: json["_id"],
+    price: json["price"],
+    duration: json["duration"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "_id": id,
+    "price": price,
+    "duration": duration,
   };
 }
