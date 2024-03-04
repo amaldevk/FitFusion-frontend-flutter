@@ -1,5 +1,3 @@
-import 'package:fitfusion_app/Models/PackageModel.dart';
-import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/Services/transactionservice.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +12,6 @@ class transactionPage extends StatefulWidget {
 
 class _transactionPage extends State<transactionPage> {
   late Future<String> userID;
-  late Future<dynamic> data;
   @override
   void initState() {
     super.initState();
@@ -32,6 +29,7 @@ class _transactionPage extends State<transactionPage> {
   void sendmoney() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String userId = preferences.getString("UserID") ?? "";
+
     SharedPreferences prefer = await SharedPreferences.getInstance();
     String packageId = prefer.getString("packageid") ?? "";
 
@@ -95,19 +93,24 @@ class _transactionPage extends State<transactionPage> {
                         children: [
                           SizedBox(height: 20,),
                           SizedBox(height: 20),
+
+                          FutureBuilder<String>(
+                            future: userID,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Text('User ID: ${snapshot.data}');
+                              } else {
+                                return CircularProgressIndicator();
+                              }
+                            },
+                          ),
                           SizedBox(
                             height: 55,
                           ),
                           SizedBox(
                             height: 50,
                             width: 450,
-                            child: FutureBuilder<List<Package>>(
-                              future: data,
-                              builder: (context,snapshot){
-                                if(snapshot)
-
-                              },
-                            ),
+                            child: Center(child:Text("AMOUNT")),
                           ),
 
                           SizedBox(
