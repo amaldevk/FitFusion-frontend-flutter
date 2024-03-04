@@ -1,4 +1,5 @@
 
+import 'package:fitfusion_app/pages/buy.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -130,7 +131,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => transactionPage(),
+                                                  builder: (context) => Buy(),
                                                 ),
                                               );
                                             } else {
