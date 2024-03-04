@@ -1,38 +1,25 @@
-
-import 'package:fitfusion_app/pages/updatepackage.dart';
-import 'package:fitfusion_app/pages/userProfile.dart';
-import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
+import 'package:fitfusion_app/Services/subscriptionservice.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class selectPackagepage extends StatefulWidget {
-  const selectPackagepage({Key? key}) : super(key: key);
+class updatepackage extends StatefulWidget {
+  final String userId;
 
+  const updatepackage({Key? key, required this.userId}): super(key: key);
   @override
-  State<selectPackagepage> createState() => _selectPackagepageState();
+  State<updatepackage> createState() => _updatepackageState();
 }
 
-class _selectPackagepageState extends State<selectPackagepage> {
+class _updatepackageState extends State<updatepackage> {
   late Future<List<Package>> data;
-  late String userId;
-  late String Uid;
-
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    fetchData();
+    data=PackageApiService().getPackageApi();
   }
-
-  Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
-    setState(() {
-      data = PackageApiService().getPackageApi();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,9 +56,9 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                       Text(
                                         "${post.packageName}",
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15
                                         ),
                                       ),
                                     ],
@@ -122,12 +109,10 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                               print("success");
 
                                               String packageId = response["userdata"]["_id"].toString();
-
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
                                               print(packageId);
-                                              preferences.setString("UserID", userId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
@@ -191,7 +176,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                 ),
               ) ,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage(userId: userId)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
               },
               child: Text("UPDATE PACKAGE"),
             ),
@@ -199,6 +184,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
           //Text("User ID: $userId"),
         ],
       ),
+
     );
   }
 }
