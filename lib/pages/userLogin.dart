@@ -26,11 +26,14 @@ class _LoginState extends State<Login> {
      if(response["status"]=="success"){
 
       String userId =response["userdata"]["_id"].toString();
+      String token = response["token"].toString();
 
       SharedPreferences.setMockInitialValues({});
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("userid", userId);
+      preferences.setString("token", token);
       print("successfull uid"+userId);
+      print("Token"+token);
 
       Navigator.push(context,MaterialPageRoute(builder: (context)=>selectPackagepage()));
     }
