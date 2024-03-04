@@ -50,4 +50,29 @@ class PostApiService
       return [];
     }
   }
+
+  // static const String baseUrl = 'http://localhost:3006/api'; // Replace with your actual backend URL
+  Future<List<Post2>> getAllTransactions() async {
+  //   final response = await http.get(Uri.parse('$baseUrl/tran/viewall'));
+  //
+  //   if (response.statusCode == 200) {
+  //     List<dynamic> data = jsonDecode(response.body);
+  //     List<Post2> transactions = data.map((item) => Post2.fromJson(item)).toList();
+  //     return transactions;
+  //   } else {
+  //     throw Exception('Failed to load transactions: ${response.statusCode}');
+  //   }
+  // }
+    var client =http.Client();
+    var apiUrl=Uri.parse("http://localhost:3006/api/tran/viewall");
+
+    var response=await client.get(apiUrl);
+    if(response.statusCode==200){
+      return post2FromJson(response.body);
+    }
+    else
+    {
+      return [];
+    }
+  }
 }
