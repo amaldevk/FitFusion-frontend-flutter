@@ -54,7 +54,7 @@ class _AdminLoginState extends State<AdminLogin> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage("assets/Gym.jpg",),
+                backgroundImage: AssetImage("assets/Admin.jpg",),
                 radius: 80,
               ),
               SizedBox(height: 50,),

@@ -48,7 +48,15 @@ class MenuPage extends StatelessWidget {
             ],
           ),
         ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/home.png"), // Provide path to your background image
+              fit: BoxFit.fitWidth,
+            ),
+          ),),
       ),
     );
   }
 }
+
