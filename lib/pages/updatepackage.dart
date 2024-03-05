@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class updatepackage extends StatefulWidget {
-  const updatepackage({super.key});
+  final String userid;
+  const updatepackage({Key? key, required this.userid});
 
   @override
   State<updatepackage> createState() => _updatepackageState();
@@ -27,8 +28,7 @@ class _updatepackageState extends State<updatepackage> {
   }
 
   Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
+
     setState(() {
       data = PackageApiService().getPackageApi();
     });
@@ -125,12 +125,15 @@ class _updatepackageState extends State<updatepackage> {
 
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
+                                              SharedPreferences preferences1 = await SharedPreferences.getInstance();
                                               preferences.setString("packageId", packageId);
+                                              userId = preferences1.getString("userid") ?? "";
+                                              print("ss");
                                               print(packageId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => updatepayment(),
+                                                  builder: (context) => updatepayment(userid:widget.userid),
                                                 ),
                                               );
                                             } else {

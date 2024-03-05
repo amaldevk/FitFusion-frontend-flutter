@@ -28,7 +28,7 @@ class _transactionPage extends State<transactionPage> {
 
   void sendmoney() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    String userId = preferences.getString("UserID") ?? "";
+    String userId = preferences.getString("UserId") ?? "";
 
     SharedPreferences prefer = await SharedPreferences.getInstance();
     String packageId = prefer.getString("packageid") ?? "";

@@ -28,6 +28,9 @@ class _selectPackagepageState extends State<selectPackagepage> {
   Future<void> fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     userId = preferences.getString("userid") ?? "";
+    preferences.setString("UserID", userId);
+
+
     setState(() {
       data = PackageApiService().getPackageApi();
     });
@@ -122,7 +125,6 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                               print("success");
 
                                               String packageId = response["userdata"]["_id"].toString();
-
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
@@ -191,10 +193,22 @@ class _selectPackagepageState extends State<selectPackagepage> {
                   borderRadius: BorderRadius.circular(4),
                 ),
               ) ,
-              onPressed: () {
+
+                onPressed: () async {
+                    SharedPreferences.setMockInitialValues({});
+                    SharedPreferences preferences = await SharedPreferences.getInstance();
+                    preferences.setString("UserID", userId);
+                    print("selectpackage:"+userId);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => updatepackage(userid:userId),
+                      ),
+                    );
+
+                },
                 //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
-              },
+               // Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
               child: Text("UPDATE PACKAGE"),
             ),
           ),

@@ -7,7 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Assuming UserServiceApi is correctly implemented elsewhere
 
 class updatepayment extends StatefulWidget {
-  const updatepayment({Key? key}) : super(key: key);
+  final String userid;
+  const updatepayment({Key? key, required this.userid}) : super(key: key);
 
   @override
   State<updatepayment> createState() => _View_profileState();
@@ -23,12 +24,12 @@ class _View_profileState extends State<updatepayment> {
   }
 
   Future<void> loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getString("userid") ?? "";
-    String packageId = prefs.getString("packageId") ?? "";
-    print("dd"+userId);
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String userId = preferences.getString("userid") ?? "";
+    String packageId = preferences.getString("packageId") ?? "";
+    print("dd"+widget.userid);
     print("dd"+packageId);
-    final response = await UpdateApiService().addPackageApi(userId, packageId);
+    final response = await UpdateApiService().addPackageApi(widget.userid, packageId);
     if (response["status"] == "success") {
       print("Transaction added");
     } else {
