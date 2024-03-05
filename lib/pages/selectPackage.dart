@@ -67,9 +67,9 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                       Text(
                                         "${post.packageName}",
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
                                         ),
                                       ),
                                     ],
