@@ -1,22 +1,24 @@
-import 'package:fitfusion_app/pages/updatepackage.dart';
-import 'package:fitfusion_app/pages/userProfile.dart';
-import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
+import 'package:fitfusion_app/pages/userProfile.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class selectPackagepage extends StatefulWidget {
-  const selectPackagepage({Key? key}) : super(key: key);
+class updatepackage extends StatefulWidget {
+  final String userid;
+  const updatepackage({Key? key, required this.userid});
 
   @override
-  State<selectPackagepage> createState() => _selectPackagepageState();
+  State<updatepackage> createState() => _updatepackageState();
 }
 
-class _selectPackagepageState extends State<selectPackagepage> {
+class _updatepackageState extends State<updatepackage> {
   late Future<List<Package>> data;
   late String userId;
   late String Uid;
+
+
+
 
   @override
   void initState() {
@@ -25,13 +27,11 @@ class _selectPackagepageState extends State<selectPackagepage> {
   }
 
   Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
+
     setState(() {
       data = PackageApiService().getPackageApi();
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,13 +124,15 @@ class _selectPackagepageState extends State<selectPackagepage> {
 
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
-                                              preferences.setString("packageid", packageId);
+                                              SharedPreferences preferences1 = await SharedPreferences.getInstance();
+                                              preferences.setString("packageId", packageId);
+                                              userId = preferences1.getString("userid") ?? "";
+                                              print("ss");
                                               print(packageId);
-                                              preferences.setString("UserID", userId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => transactionPage(),
+                                                  builder: (context) => updatepayment(userid:widget.userid),
                                                 ),
                                               );
                                             } else {
@@ -160,55 +162,6 @@ class _selectPackagepageState extends State<selectPackagepage> {
             ),
           ),
           SizedBox(height: 30,),
-          SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ) ,
-              onPressed: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
-              },
-              child: Text("My Profile"),
-            ),
-          ),
-          SizedBox(height: 30,),
-          SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ) ,
-
-              onPressed: () async {
-                SharedPreferences.setMockInitialValues({});
-                SharedPreferences preferences = await SharedPreferences.getInstance();
-                preferences.setString("UserID", userId);
-                print("selectpackage:"+userId);
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => updatepackage(userid:userId),
-                  ),
-                );
-
-              },
-              //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
-              // Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
-              child: Text("UPDATE PACKAGE"),
-            ),
-          ),
 
           //Text("User ID: $userId"),
         ],
