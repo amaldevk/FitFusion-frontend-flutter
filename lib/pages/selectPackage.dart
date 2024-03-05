@@ -114,6 +114,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                           ),
                                           onPressed: () async {
                                             String packageName = post.packageName;
+                                            print(packageName);
                                             final response =
                                             await PackageApiService().logpack(packageName);
 
@@ -125,7 +126,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
-                                              print(packageId);
+                                              print("selected"+packageId);
                                               preferences.setString("UserID", userId);
                                               Navigator.push(
                                                 context,

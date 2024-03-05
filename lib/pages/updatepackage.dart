@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
+import 'package:fitfusion_app/pages/updatepayment.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -125,7 +126,7 @@ class _updatepackageState extends State<updatepackage> {
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               SharedPreferences preferences1 = await SharedPreferences.getInstance();
-                                              preferences.setString("packageId", packageId);
+                                              preferences.setString("packageID", packageId);
                                               userId = preferences1.getString("userid") ?? "";
                                               print("ss");
                                               print(packageId);
