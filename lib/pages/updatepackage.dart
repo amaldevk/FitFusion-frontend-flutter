@@ -1,6 +1,7 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/Services/subscriptionservice.dart';
+import 'package:fitfusion_app/pages/Update.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -116,7 +117,7 @@ class _updatepackageState extends State<updatepackage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => transactionPage(),
+                                                  builder: (context) => UpdatePayment(userId:useId),
                                                 ),
                                               );
                                             } else {
