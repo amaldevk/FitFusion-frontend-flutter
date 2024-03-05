@@ -103,20 +103,22 @@ class userApiService{
     }
   }
 
-  Future<dynamic> viewProfile(String user_ID) async{
+  Future<dynamic> viewProfile(String user_ID ,String token) async{
     var client =http.Client();
     var url=Uri.parse("http://localhost:3006/api/member/myprofile");
     try{
       var response =await client.post(url,
-      body: jsonEncode({"userId":user_ID}),
-      headers:{
-        "Content-Type": "application/json",
+      body: jsonEncode({"userId":user_ID,"token":token}),
+      headers:<String,String>{
+        "Content-Type": "application/json", "token":token
       },
       );
       if(response.statusCode == 200){
         return json.decode(response.body);
       }
       else{
+        print(response);
+        print("eroor");
         throw Exception("Invalid");
       }
     }

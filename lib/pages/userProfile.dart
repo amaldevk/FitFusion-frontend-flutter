@@ -1,28 +1,45 @@
+import 'dart:async';
 import 'package:fitfusion_app/Services/userService.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+// Assuming UserServiceApi is correctly implemented elsewhere
 
 class View_profile extends StatefulWidget {
-  final String userId;
-
-  const View_profile({Key? key, required this.userId}) : super(key: key);
+  const View_profile({Key? key}) : super(key: key);
 
   @override
-  _View_profileState createState() => _View_profileState();
+  State<View_profile> createState() => _View_profileState();
 }
 
 class _View_profileState extends State<View_profile> {
-  late Future<dynamic> userData;
+  Map<String, dynamic> searchResult={};
 
   @override
   void initState() {
     super.initState();
-    var apiService = userApiService();
-    userData =  apiService.viewProfile(widget.userId);
-
+    loadData();
   }
 
+  Future<void> loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String userId = prefs.getString("userid") ?? "";
+    String userTok = prefs.getString("token") ?? "";
+    print(userId);
+    print("Token is:"+userTok);
+    // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
+    try {
+      final response = await userApiService().viewProfile(userId, userTok);
+      if (response != null && mounted) {
+        setState(() {
+          searchResult = Map<String, dynamic>.from(response);
+        });
+      }
+    } catch (e) {
+      // Handling exceptions that might be thrown by UserServiceApi().searchData()
+      print("Error fetching user data: $e");
+      // Optionally, show an error message to the user
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,72 +55,24 @@ class _View_profileState extends State<View_profile> {
           tooltip: 'Search User',
         ),
       ),
-      body: FutureBuilder(
-        future: userData,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            var user = snapshot.data;
-            return ListView(
-              padding: EdgeInsets.all(16),
-              children: [
-                ListTile(
-                  title: Text('Name: ${user['name']}', style: TextStyle(
-                color: Colors.black,
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
-          ),),
-                ),
-                ListTile(
-                  title: Text('Address: ${user['address']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-                ListTile(
-                  title: Text('Weight: ${user['weight']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-                ListTile(
-                  title: Text('Height: ${user['height']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-                ListTile(
-                  title: Text('ID Proof: ${user['idproof']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-                ListTile(
-                  title: Text('Email ID: ${user['emailid']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-                ListTile(
-                  title: Text('Contact No.: ${user['contactno']}', style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),),
-                ),
-              ],
-            );
-          }
-        },
-      ),
+      body:   ListView(
+          padding: EdgeInsets.all(16),
+          children: [
+                     ListTile(
+                      title: Text("Name: ${searchResult['name']}",style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      )),
+                      subtitle: Text("Address: ${searchResult['address']}"+"\nWeight: ${searchResult['weight']}"+"\nHeight: ${searchResult['height']}"+"\nAadhar No.: ${searchResult['idproof']}"
+                          +"\nEmail  ID: ${searchResult['emailid']}"+"\nContact No.: ${searchResult['contactno']}",style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      )),
+                    ),]
+                  )
+
     );
   }
 }
