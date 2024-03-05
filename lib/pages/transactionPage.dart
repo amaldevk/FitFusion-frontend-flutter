@@ -50,7 +50,7 @@ class _transactionPage extends State<transactionPage> {
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage())),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
             child: Text('OK'),
           ),
         ],

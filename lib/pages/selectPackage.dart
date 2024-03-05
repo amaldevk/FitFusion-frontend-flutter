@@ -1,3 +1,4 @@
+import 'package:fitfusion_app/pages/CurrendPackage.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -5,17 +6,16 @@ import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class selectPackagepage extends StatefulWidget {
-  const selectPackagepage({Key? key}) : super(key: key);
+class SelectPackagePage extends StatefulWidget {
+  const SelectPackagePage({Key? key}) : super(key: key);
 
   @override
-  State<selectPackagepage> createState() => _selectPackagepageState();
+  State<SelectPackagePage> createState() => _SelectPackagePageState();
 }
 
-class _selectPackagepageState extends State<selectPackagepage> {
+class _SelectPackagePageState extends State<SelectPackagePage> {
   late Future<List<Package>> data;
-  late String userId;
-  late String Uid;
+  late String userId = '';
 
   @override
   void initState() {
@@ -67,9 +67,9 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                       Text(
                                         "${post.packageName}",
                                         style: TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15
                                         ),
                                       ),
                                     ],
@@ -171,13 +171,23 @@ class _selectPackagepageState extends State<selectPackagepage> {
                 ),
               ) ,
               onPressed: () {
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
               },
               child: Text("My Profile"),
             ),
           ),
-          //Text("User ID: $userId"),
+          SizedBox(height: 30,),
+          SizedBox(
+              width: 200,
+              child: ElevatedButton(style:ElevatedButton.styleFrom(
+                backgroundColor:
+                Color(0xFF752FFF).withOpacity(0.8),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ) ,
+                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage(token: 'token', userId: 'userId')));}, child:Text("Current Package")))
         ],
       ),
     );

@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
       print("successfull uid"+userId);
       print("Token is:"+userToken);
 
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>selectPackagepage()));
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
     }
 
     else if(response["status"]=="Invalid user"){

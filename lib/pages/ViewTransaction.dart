@@ -1,6 +1,7 @@
 import 'package:fitfusion_app/Models/TransactionModel.dart';
 import 'package:fitfusion_app/Services/transactionservice.dart';
 import 'package:flutter/material.dart';
+
 class ViewTransactionScreen extends StatefulWidget {
   const ViewTransactionScreen({Key? key}) : super(key: key);
 
@@ -42,13 +43,13 @@ class _ViewTransactionScreenState extends State<ViewTransactionScreen> {
                 return Card(
                   color: Colors.white.withOpacity(0.9),
                   child: ListTile(
-                    title: Text('User ID: ${transaction.userid.name}'),
+                    title: Text('User ID: ${transaction.userid?.name ?? 'Unknown'}'), // Handle null case
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Package ID: ${transaction.packageid.id}'),
-                        Text('Package duration: ${transaction.packageid.duration}'),
-                        Text('Price: ${transaction.packageid.price}'),
+                        Text('Package ID: ${transaction.packageid?.id ?? 'Unknown'}'), // Handle null case
+                        Text('Package Duration: ${transaction.packageid?.duration ?? 'Unknown'}'), // Handle null case
+                        Text('Price: ${transaction.packageid?.price ?? 'Unknown'}'), // Handle null case
                         Text('Post Date: ${transaction.postdate}'),
                       ],
                     ),
@@ -64,4 +65,3 @@ class _ViewTransactionScreenState extends State<ViewTransactionScreen> {
     );
   }
 }
-
