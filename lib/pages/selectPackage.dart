@@ -172,7 +172,8 @@ class _selectPackagepageState extends State<selectPackagepage> {
                 ),
               ) ,
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
               },
               child: Text("My Profile"),
             ),
