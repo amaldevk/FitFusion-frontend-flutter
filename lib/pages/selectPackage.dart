@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';

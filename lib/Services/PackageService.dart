@@ -13,6 +13,7 @@ class PackageApiService {
           "Content-Type" : "application/json; charset=UTF-8"
         },
         body: jsonEncode(<String,String>{
+
           "packageName": packageName,
           "price": price,
           "duration": duration,
