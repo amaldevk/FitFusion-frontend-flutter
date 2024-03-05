@@ -12,6 +12,7 @@ class transactionPage extends StatefulWidget {
 
 class _transactionPage extends State<transactionPage> {
   late Future<String> userID;
+  late Future<String> packageId;
   @override
   void initState() {
     super.initState();
@@ -22,6 +23,7 @@ class _transactionPage extends State<transactionPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       userID = Future.value(preferences.getString("UserID") ?? "Unknown");
+      packageId = Future.value(preferences.getString("packageid") ?? "Unknown");
     });
   }
 
