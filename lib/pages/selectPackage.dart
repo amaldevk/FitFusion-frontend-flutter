@@ -1,4 +1,5 @@
 
+import 'package:fitfusion_app/pages/buy.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -16,6 +17,7 @@ class selectPackagepage extends StatefulWidget {
 class _selectPackagepageState extends State<selectPackagepage> {
   late Future<List<Package>> data;
   late String userId;
+  //late String packageId;
   late String Uid;
 
   @override
@@ -27,6 +29,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
   Future<void> fetchData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     userId = preferences.getString("userid") ?? "";
+   // packageId = preferences.getString("packageid") ?? "";
     setState(() {
       data = PackageApiService().getPackageApi();
     });
@@ -130,7 +133,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => transactionPage(),
+                                                  builder: (context) => Buy(),
                                                 ),
                                               );
                                             } else {

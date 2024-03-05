@@ -23,8 +23,10 @@ class _View_profileState extends State<View_profile> {
   Future<void> loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String userId = prefs.getString("userid") ?? "";
+    String packetId = prefs.getString("packetid") ?? "";
     String userTok = prefs.getString("token") ?? "";
     print(userId);
+    //print("packetId:"+packetId);
     print("Token is:"+userTok);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
     try {
@@ -65,7 +67,7 @@ class _View_profileState extends State<View_profile> {
                         fontSize: 15,
                       )),
                       subtitle: Text("Address: ${searchResult['address']}"+"\nWeight: ${searchResult['weight']}"+"\nHeight: ${searchResult['height']}"+"\nAadhar No.: ${searchResult['idproof']}"
-                          +"\nEmail  ID: ${searchResult['emailid']}"+"\nContact No.: ${searchResult['contactno']}",style: TextStyle(
+                          +"\nEmail  ID: ${searchResult['emailid']}"+"\nContact No.: ${searchResult['contactno']}"+"\nPackageName: ${searchResult['packageName']}",style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
