@@ -1,16 +1,17 @@
+import 'package:fitfusion_app/pages/deleteuser.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:fitfusion_app/Services/userService.dart';
 
-class viewUser extends StatefulWidget {
-  const viewUser({Key? key});
+class ViewUser extends StatefulWidget {
+  const ViewUser({Key? key});
 
   @override
-  State<viewUser> createState() => _viewUserState();
+  State<ViewUser> createState() => _ViewUserState();
 }
 
-class _viewUserState extends State<viewUser> {
+class _ViewUserState extends State<ViewUser> {
   Future<List<Viewuser>>? data;
 
   @override
@@ -40,7 +41,10 @@ class _viewUserState extends State<viewUser> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchUser()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchUser()),
+                );
               },
               icon: Icon(Icons.search, color: Colors.white),
               tooltip: 'Search User',
@@ -113,6 +117,12 @@ class _viewUserState extends State<viewUser> {
                                   : null,
                             ),
                           ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _showDeleteConfirmationDialog();
+                            },
+                          ),
                         ),
                         Text("ID proof: " + user.idproof),
                         SizedBox(height: 10),
@@ -129,6 +139,34 @@ class _viewUserState extends State<viewUser> {
           },
         ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Delete User"),
+          content: Text("Are you sure you want to delete this user?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                //_deleteUser(userId);
+                //Navigator.pop(context);
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>deleteUser()));
+              },
+              child: Text("Delete"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

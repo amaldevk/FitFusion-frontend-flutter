@@ -35,7 +35,7 @@ class MenuPage extends StatelessWidget {
                 },),
               ListTile(title: const Text("VIEW USER"),
                 onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>viewUser()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewUser()));
                 },),
               ListTile(title: const Text("UPDATE PAYMENT"),
                 onTap: (){
