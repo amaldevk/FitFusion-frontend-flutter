@@ -74,7 +74,7 @@ class _viewUserState extends State<viewUser> {
                             radius: 27,
                             backgroundColor: user.paymentStatus == PaymentStatus.SUCCESS
                                 ? Colors.lightGreen.shade900
-                                : Color(0xFF000066),
+                                : Color(0xFF830317),
                             child: Text(
                               user.name[0],
                               style: TextStyle(
@@ -91,7 +91,7 @@ class _viewUserState extends State<viewUser> {
                               fontWeight: FontWeight.bold,
                               color: user.paymentStatus == PaymentStatus.SUCCESS
                                   ? Colors.lightGreen.shade900
-                                  : Color(0xFF000066),
+                                  : Color(0xFF830317),
                             ),
                           ),
                           subtitle: Text(

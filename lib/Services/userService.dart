@@ -1,6 +1,5 @@
-
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:http/http.dart' as http;
 
@@ -38,15 +37,19 @@ class userApiService{
       if (response.statusCode == 200) {
         return viewuserFromJson(response.body);
       } else {
-        throw Exception("Failed to fetch user data");
+        throw Exception("Failed to fetch user data. Status code: ${response.statusCode}");
       }
+    } on SocketException catch (e) {
+      throw Exception("Network error: $e");
+    } on HttpException catch (e) {
+      throw Exception("HTTP error: $e");
     } catch (e) {
-      print("Error fetching user data: $e");
-      return []; // Return empty list if an error occurs
+      throw Exception("Error fetching user data: $e");
     } finally {
       client.close();
     }
   }
+
 
   Future<dynamic> Sentdata(String name,address,dob,age,contactno,emailid,gender,bloodgroup,height,weight,idproof,username,password,status) async {
     var client = http.Client();
