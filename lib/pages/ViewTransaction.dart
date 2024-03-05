@@ -47,8 +47,8 @@ class _ViewTransactionScreenState extends State<ViewTransactionScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Package ID: ${transaction.packageid.id}'),
-                        Text('Package ID: ${transaction.packageid.duration}'),
-                        Text('Package ID: ${transaction.packageid.price}'),
+                        Text('Package duration: ${transaction.packageid.duration}'),
+                        Text('Price: ${transaction.packageid.price}'),
                         Text('Post Date: ${transaction.postdate}'),
                       ],
                     ),
