@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
   void loginCheck() async{
     final response = await userApiService().loginApi(n1.text, n2.text);
 
-     if(response["status"]=="success"){
+    if(response["status"]=="success"){
 
       String userId =response["userdata"]["_id"].toString();
       String userToken =response["token"].toString();
@@ -118,17 +118,17 @@ class _LoginState extends State<Login> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                   onTap:(){
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRegister()));
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRegister()));
                     },
-                  child: Text("Register",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF).withOpacity(0.7) )),
+                    child: Text("Register",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF).withOpacity(0.7) )),
                   ),
-                SizedBox(width: 35,),
-               GestureDetector(
-              onTap:(){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminLogin()));},
-              child: Text("AdminLogin",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF) )),
-               )
+                  SizedBox(width: 35,),
+                  GestureDetector(
+                    onTap:(){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminLogin()));},
+                    child: Text("AdminLogin",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF) )),
+                  )
                 ],
               ),
             ],

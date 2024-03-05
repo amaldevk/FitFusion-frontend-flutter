@@ -1,4 +1,4 @@
-
+import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
@@ -42,7 +42,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
       body: Column(
         children: [
           Container(
-            height: 350,
+            height: 360,
             color: Colors.black,
             child: FutureBuilder<List<Package>>(
               future: data,
@@ -85,7 +85,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                         ),
                                       ),
                                       Text(
-                                        "\n ${post.duration}\n\n",
+                                        "\n ${post.duration}\n",
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -112,51 +112,28 @@ class _selectPackagepageState extends State<selectPackagepage> {
                                             ),
                                           ),
                                           onPressed: () async {
-                                            // Check if the user has already selected a package
-                                            SharedPreferences preferences = await SharedPreferences.getInstance();
-                                            bool packageSelected = preferences.getBool("packageSelected") ?? false;
+                                            String packageName = post.packageName;
+                                            final response =
+                                            await PackageApiService().logpack(packageName);
 
-                                            if (packageSelected) {
-                                              // Display the prompt if the user has already selected a package
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text("Package Already Selected"),
-                                                    content: Text("You have already selected a package. Please contact admin to change it."),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          Navigator.of(context).pop();
-                                                        },
-                                                        child: Text("OK"),
-                                                      ),
-                                                    ],
-                                                  );
-                                                },
+                                            if (response["status"] == "success") {
+                                              print("success");
+
+                                              String packageId = response["userdata"]["_id"].toString();
+
+                                              SharedPreferences.setMockInitialValues({});
+                                              SharedPreferences preferences = await SharedPreferences.getInstance();
+                                              preferences.setString("packageid", packageId);
+                                              print(packageId);
+                                              preferences.setString("UserID", userId);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => transactionPage(),
+                                                ),
                                               );
                                             } else {
-                                              // Proceed with package selection if the user has not selected a package
-                                              String packageName = post.packageName;
-                                              final response = await PackageApiService().logpack(packageName);
-
-                                              if (response["status"] == "success") {
-                                                print("success");
-
-                                                String packageId = response["userdata"]["_id"].toString();
-                                                preferences.setString("packageid", packageId);
-                                                preferences.setBool("packageSelected", true); // Mark package as selected
-                                                print(packageId);
-                                                preferences.setString("UserID", userId);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => transactionPage(),
-                                                  ),
-                                                );
-                                              } else {
-                                                print("invalid");
-                                              }
+                                              print("invalid");
                                             }
                                           },
                                           child: Text("BUY"),
@@ -181,11 +158,26 @@ class _selectPackagepageState extends State<selectPackagepage> {
               },
             ),
           ),
-          ElevatedButton(
-            onPressed: () {},
-            child: Text("My Profile"),
+          SizedBox(height: 30,),
+          SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              style:ElevatedButton.styleFrom(
+                backgroundColor:
+                Color(0xFF752FFF).withOpacity(0.8),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ) ,
+              onPressed: () {
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
+              },
+              child: Text("My Profile"),
+            ),
           ),
-          Text("User ID: $userId"),
+          //Text("User ID: $userId"),
         ],
       ),
     );
