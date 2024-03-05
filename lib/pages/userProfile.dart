@@ -20,7 +20,6 @@ class _View_profileState extends State<View_profile> {
     super.initState();
     var apiService = userApiService();
     userData =  apiService.viewProfile(widget.userId);
-
   }
 
 
