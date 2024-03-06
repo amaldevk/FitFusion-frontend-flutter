@@ -36,18 +36,16 @@ class _View_profileState extends State<updatepayment> {
     print(userId);
     print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-    try {
-      final response = await UpdateApiService().addPackageApi(widget.userid,packageId,widget.userToken);
+      final response = await UpdateApiService().addPackageApi(widget.userid,packageId);
+      print("response"+response);
       if (response != null && mounted) {
-        setState(() {
-          searchResult = Map<String, dynamic>.from(response);
-        });
+        print("Successfull");
       }
-    } catch (e) {
-      // Handling exceptions that might be thrown by UserServiceApi().searchData()
-      print("Error fetching user data: $e");
-      // Optionally, show an error message to the user
-    }
+    else {
+        // Handling exceptions that might be thrown by UserServiceApi().searchData()
+        print("Error fetching user data:");
+        // Optionally, show an error message to the user
+      }
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -55,10 +53,10 @@ class _View_profileState extends State<updatepayment> {
           style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage(userToken: widget.userToken))),
-            child: Text('OK'),
-          ),
+       //   TextButton(
+        //    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage(userToken: widget.userToken))),
+       //     child: Text('OK'),
+      //    ),
         ],
       ),
     );
@@ -79,7 +77,7 @@ class _View_profileState extends State<updatepayment> {
           tooltip: 'Search User',
         ),
       ),
-
+body: Container(child: Center(child: Text("PAYMENT SUCCESSFULL",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),)),
 
     );
   }
