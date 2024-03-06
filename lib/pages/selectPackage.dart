@@ -1,11 +1,11 @@
-import 'package:fitfusion_app/pages/CurrendPackage.dart';
-import 'package:fitfusion_app/pages/buyPackage.dart';
-import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fitfusion_app/pages/CurrendPackage.dart';
+import 'package:fitfusion_app/pages/buyPackage.dart';
+import 'package:fitfusion_app/pages/userProfile.dart';
 
 class SelectPackagePage extends StatefulWidget {
   const SelectPackagePage({Key? key}) : super(key: key);
@@ -38,7 +38,14 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xFF752FFF),
-        title: Text("PACKAGES",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+        title: Text(
+          "PACKAGES",
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -48,7 +55,19 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
             child: FutureBuilder<List<Package>>(
               future: data,
               builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(
+                    child: Text('No packages available.'),
+                  );
+                } else {
                   return ListView(
                     scrollDirection: Axis.horizontal,
                     children: snapshot.data!.map((post) {
@@ -68,9 +87,9 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                       Text(
                                         "${post.packageName}",
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
                                         ),
                                       ),
                                     ],
@@ -114,23 +133,26 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                           ),
                                           onPressed: () async {
                                             String packageName = post.packageName;
-                                            final response =
-                                            await PackageApiService().logpack(packageName);
+                                            final response = await PackageApiService()
+                                                .logpack(packageName);
 
                                             if (response["status"] == "success") {
                                               print("success");
 
-                                              String packageId = response["userdata"]["_id"].toString();
+                                              String packageId =
+                                              response["userdata"]["_id"].toString();
 
                                               SharedPreferences.setMockInitialValues({});
-                                              SharedPreferences preferences = await SharedPreferences.getInstance();
+                                              SharedPreferences preferences =
+                                              await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
                                               print(packageId);
                                               preferences.setString("userId", userId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => BuyPackage(userId: userId),
+                                                  builder: (context) =>
+                                                      BuyPackage(userId: userId),
                                                 ),
                                               );
                                             } else {
@@ -150,45 +172,52 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                       );
                     }).toList(),
                   );
-                } else {
-                  print(data);
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
                 }
               },
             ),
           ),
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
           SizedBox(
             width: 200,
             child: ElevatedButton(
-              style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF752FFF).withOpacity(0.8),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(4),
                 ),
-              ) ,
+              ),
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => View_profile()));
               },
               child: Text("My Profile"),
             ),
           ),
-          SizedBox(height: 30,),
+          SizedBox(height: 30),
           SizedBox(
-              width: 200,
-              child: ElevatedButton(style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+            width: 200,
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF752FFF).withOpacity(0.8),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
                 ),
-              ) ,
-                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage(token: 'token', userId: 'userId')));}, child:Text("Current Package")))
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CurrentPackage(
+                            token: 'token',
+                            userId: 'userId',
+                          )));
+                },
+                child: Text("Current Package")),
+          )
         ],
       ),
     );
