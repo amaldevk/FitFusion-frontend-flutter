@@ -15,7 +15,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
+  String userToken="";
   String email="",password="",message="";
   TextEditingController n1 =new TextEditingController();
   TextEditingController n2 =new TextEditingController();
@@ -26,7 +26,7 @@ class _LoginState extends State<Login> {
     if(response["status"]=="success"){
 
       String userId =response["userdata"]["_id"].toString();
-      String userToken =response["token"].toString();
+       userToken =response["token"].toString();
 
       SharedPreferences.setMockInitialValues({});
       SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -36,7 +36,7 @@ class _LoginState extends State<Login> {
       print("successfull uid"+userId);
       print("Token is:"+userToken);
 
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>selectPackagepage()));
+      Navigator.push(context,MaterialPageRoute(builder: (context)=>selectPackagepage(userToken:userToken)));
     }
 
     else if(response["status"]=="Invalid user"){

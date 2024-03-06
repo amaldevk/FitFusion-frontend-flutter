@@ -9,7 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class updatepayment extends StatefulWidget {
   final String userid;
-  const updatepayment({Key? key, required this.userid}) : super(key: key);
+  final String userToken;
+  const updatepayment({Key? key, required this.userid,required this.userToken}) : super(key: key);
 
   @override
   State<updatepayment> createState() => _View_profileState();
@@ -33,10 +34,10 @@ class _View_profileState extends State<updatepayment> {
     print("dd"+packageId);
 
     print(userId);
-    print("Token is:"+userTok);
+    print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
     try {
-      final response = await UpdateApiService().addPackageApi(widget.userid, userTok);
+      final response = await UpdateApiService().addPackageApi(widget.userid,packageId,widget.userToken);
       if (response != null && mounted) {
         setState(() {
           searchResult = Map<String, dynamic>.from(response);
@@ -55,7 +56,7 @@ class _View_profileState extends State<updatepayment> {
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
           TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage())),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage(userToken: widget.userToken))),
             child: Text('OK'),
           ),
         ],

@@ -7,7 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class updatepackage extends StatefulWidget {
   final String userid;
-  const updatepackage({Key? key, required this.userid});
+  final String userToken;
+  const updatepackage({Key? key, required this.userid,required this.userToken});
 
   @override
   State<updatepackage> createState() => _updatepackageState();
@@ -133,7 +134,7 @@ class _updatepackageState extends State<updatepackage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => updatepayment(userid:widget.userid),
+                                                  builder: (context) => updatepayment(userid:widget.userid,userToken:widget.userToken),
                                                 ),
                                               );
                                             } else {

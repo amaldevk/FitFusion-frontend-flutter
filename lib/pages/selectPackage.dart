@@ -7,7 +7,8 @@ import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class selectPackagepage extends StatefulWidget {
-  const selectPackagepage({Key? key}) : super(key: key);
+  final String userToken;
+  const selectPackagepage({Key? key, required this.userToken}) : super(key: key);
 
   @override
   State<selectPackagepage> createState() => _selectPackagepageState();
@@ -199,7 +200,7 @@ class _selectPackagepageState extends State<selectPackagepage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => updatepackage(userid:userId),
+                    builder: (context) => updatepackage(userid:userId,userToken: widget.userToken),
                   ),
                 );
 
