@@ -128,4 +128,24 @@ class userApiService{
     finally{client.close();}
   }
 
+  static Future<Map<String, dynamic>> deleteMember(String emailId) async {
+    final String apiUrl = 'http://localhost:3006/api/member/delete';
+
+    final response = await http.delete(
+      Uri.parse(apiUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'emailid': emailId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to delete member');
+    }
+  }
+
 }

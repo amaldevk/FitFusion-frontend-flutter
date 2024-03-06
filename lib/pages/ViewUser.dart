@@ -19,6 +19,19 @@ class _viewUserState extends State<viewUser> {
     data = userApiService().getUser();
   }
 
+  Future<void> deleteUser(String emailId) async {
+    try {
+      await userApiService.deleteMember(emailId);
+      // Refresh the user list after deletion
+      setState(() {
+        data = userApiService().getUser();
+      });
+    } catch (error) {
+      // Handle errors
+      print('Error deleting user: $error');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -115,7 +128,20 @@ class _viewUserState extends State<viewUser> {
                           ),
                         ),
                         Text("ID proof: " + user.idproof),
-                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.only(left:380),
+                          child: SizedBox(
+                            width: 180,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFFC00121),
+                                foregroundColor: Colors.white
+                              ),
+                              onPressed: () => deleteUser(user.emailid), // Delete the user
+                              child: Text('Delete User'),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   );
