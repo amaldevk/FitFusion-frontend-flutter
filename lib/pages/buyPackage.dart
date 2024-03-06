@@ -29,7 +29,7 @@ class _BuyPackageState extends State<BuyPackage> {
       packageID = preferences.getString("packageid") ?? "";
     });
   }
-  void _showDialog(String title, String content, String imageAsset) {
+  void _showDialog(String title, String content) {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
@@ -37,7 +37,7 @@ class _BuyPackageState extends State<BuyPackage> {
           title,
           style: TextStyle(color: Color(0xFF008000), fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        content: Image.asset(imageAsset),
+        content: Text(content),
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPackagePage())),
@@ -47,6 +47,8 @@ class _BuyPackageState extends State<BuyPackage> {
       ),
     );
   }
+
+
   void buypkge() async {
     print("buy package is called");
     UID = widget.userId;
@@ -60,111 +62,56 @@ class _BuyPackageState extends State<BuyPackage> {
       });
 
       if (message == "User already has a selected package") {
-        _showDialog(
-          'ALREADY HAVE A PACKAGE',
-          'User already has a selected package',
-          'assets/unsuccessfulGif.gif',
+        // Show a SnackBar with the message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Already have a package'),
+          ),
         );
+
+        // Delay navigation to SelectPackagePage
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectPackagePage()),
+          );
+        });
       } else if (message == "Package selected successfully") {
         _showDialog(
           'Payment Successful',
           'Package selected successfully!',
-          'assets/successGiff.gif',
         );
       } else {
         _showDialog(
           'Something Went Wrong',
-          'Error: $message',
-          'assets/sadGif.gif',
+          'Error',
         );
       }
     } catch (e) {
       if (e.toString() == "Exception: User already has a selected packageeeee") {
-        // Handle the case where the user already has a selected package
-        _showDialog(
-          'ALREADY HAVE A PACKAGE',
-          'User already has a selected package',
-          'assets/unsuccessfulGif.gif',
+        // Show a SnackBar with the message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Already have a package'),
+          ),
         );
+
+        // Delay navigation to SelectPackagePage
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectPackagePage()),
+          );
+        });
       } else {
         print("Error in buypkge: $e");
         _showDialog(
           'Something Went Wrong',
-          'Error: $e',
-          'assets/sadGif.gif',
+          'Error',
         );
       }
     }
   }
-
-
-  // void buypkge() async {
-  //   print("buy package is called");
-  //   UID =widget.userId;
-  //   final response = await subApiSer().buySub(widget.userId.toString(), packageID.toString());
-  //   print("msg"+response["message"]);
-  //   setState(() {
-  //     message = response['message'];
-  //   });
-  //   if (message=="User already has a selected package") {
-  //     setState(() {
-  //       showDialog(
-  //         context: context,
-  //         builder: (_) => AlertDialog(
-  //           title: Text('ALREADY HAVE A PACKAGE',
-  //             style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
-  //           content: Image.asset('assets/unsuccessfulGif.gif'),
-  //           actions: <Widget>[
-  //             TextButton(
-  //               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
-  //               child: Text('OK'),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //       print("User already has a selected package");
-  //       // Handle the case where the user already has a selected package
-  //     }
-  //   );
-  //   } else if (message == "Package selected successfully") {
-  //     setState(() {
-  //       showDialog(
-  //         context: context,
-  //         builder: (_) => AlertDialog(
-  //           title: Text('Payment Successfull',
-  //             style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
-  //           content: Image.asset('assets/successGiff.gif'),
-  //           actions: <Widget>[
-  //             TextButton(
-  //               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
-  //               child: Text('OK'),
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //       print("Package selected successfully!");
-  //       // Handle the case where the package is successfully selected
-  //       // You can navigate to a new screen or update the UI accordingly
-  //     });
-  //   } else {
-  //     showDialog(
-  //       context: context,
-  //       builder: (_) => AlertDialog(
-  //         title: Text('Something went wrong',
-  //           style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
-  //         content: Image.asset('assets/sadGif.gif'),
-  //         actions: <Widget>[
-  //           TextButton(
-  //             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
-  //             child: Text('OK'),
-  //           ),
-  //         ],
-  //       ),
-  //     );
-  //     print("Error: $message");
-  //     // Handle other cases if needed
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
