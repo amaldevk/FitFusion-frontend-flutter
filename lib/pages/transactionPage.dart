@@ -49,10 +49,10 @@ class _transactionPage extends State<transactionPage> {
           style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage())),
-            child: Text('OK'),
-          ),
+          // TextButton(
+          //   onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage())),
+          //   child: Text('OK'),
+          // ),
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:fitfusion_app/pages/updatepackage.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -6,7 +7,9 @@ import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class selectPackagepage extends StatefulWidget {
-  const selectPackagepage({Key? key}) : super(key: key);
+  final String userToken;
+  final String userid;
+  const selectPackagepage({Key? key, required this.userid,required this.userToken}) : super(key: key);
 
   @override
   State<selectPackagepage> createState() => _selectPackagepageState();
@@ -175,6 +178,37 @@ class _selectPackagepageState extends State<selectPackagepage> {
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
               },
               child: Text("My Profile"),
+            ),
+          ),
+          SizedBox(height: 30,),
+          SizedBox(
+            width: 200,
+            child: ElevatedButton(
+              style:ElevatedButton.styleFrom(
+                backgroundColor:
+                Color(0xFF752FFF).withOpacity(0.8),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ) ,
+
+              onPressed: () async {
+                SharedPreferences.setMockInitialValues({});
+                SharedPreferences preferences = await SharedPreferences.getInstance();
+                preferences.setString("UserID", userId);
+                print("selectpackage:"+userId);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => updatepackage(userid:userId,userToken: widget.userToken),
+                  ),
+                );
+
+              },
+              //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
+              // Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
+              child: Text("UPDATE PACKAGE"),
             ),
           ),
           //Text("User ID: $userId"),

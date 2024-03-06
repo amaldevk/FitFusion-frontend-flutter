@@ -17,7 +17,6 @@ class updatepayment extends StatefulWidget {
 }
 
 class _View_profileState extends State<updatepayment> {
-  Map<String, dynamic> searchResult={};
 
   @override
   void initState() {
@@ -36,7 +35,7 @@ class _View_profileState extends State<updatepayment> {
     print(userId);
     print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-    final response = await UpdateApiService().addPackageApi(widget.userid,packageId,widget.userToken);
+    final response = await UpdateApiService().addPackageApi(widget.userToken,widget.userid,packageId);
     print("response"+response);
     if (response != null && mounted) {
       print("Successfull");
