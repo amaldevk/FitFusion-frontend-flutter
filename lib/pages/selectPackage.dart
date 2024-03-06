@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/pages/CurrendPackage.dart';
+import 'package:fitfusion_app/pages/buyPackage.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -125,11 +126,11 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
                                               print(packageId);
-                                              preferences.setString("UserID", userId);
+                                              preferences.setString("userId", userId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => transactionPage(),
+                                                  builder: (context) => BuyPackage(userId: userId),
                                                 ),
                                               );
                                             } else {
