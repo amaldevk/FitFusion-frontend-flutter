@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/Services/subscriptionService.dart';
+import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fitfusion_app/pages/transactionPage.dart';
@@ -28,27 +29,87 @@ class _BuyPackageState extends State<BuyPackage> {
       packageID = preferences.getString("packageid") ?? "";
     });
   }
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(color: Color(0xFF008000), fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPackagePage())),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
 
-  void buypkg() async {
-    UID =widget.userId;
-    final response = await subApiSer().buySub(widget.userId.toString(), packageID.toString());
-    print("msg"+response["message"]);
-    setState(() {
-      message = response['message'];
-    });
-    if (message=="User already has a selected package") {
+
+  void buypkge() async {
+    print("buy package is called");
+    UID = widget.userId;
+
+    try {
+      final response = await subApiSer().buySub(widget.userId.toString(), packageID.toString());
+      print("msg" + response["message"]);
+
       setState(() {
-        print("User already has a selected package");
-        // Handle the case where the user already has a selected package
+        message = response['message'];
       });
-    } else if (message == "Package selected successfully") {
-      setState(() {
-        print("Package selected successfully!");
-        // Handle the case where the package is successfully selected
-        // You can navigate to a new screen or update the UI accordingly
-      });
-    } else {print("Error: $message");
-      // Handle other cases if needed
+
+      if (message == "User already has a selected package") {
+        // Show a SnackBar with the message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Already have a package'),
+          ),
+        );
+
+        // Delay navigation to SelectPackagePage
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectPackagePage()),
+          );
+        });
+      } else if (message == "Package selected successfully") {
+        _showDialog(
+          'Payment Successful',
+          'Package selected successfully!',
+        );
+      } else {
+        _showDialog(
+          'Something Went Wrong',
+          'Error',
+        );
+      }
+    } catch (e) {
+      if (e.toString() == "Exception: User already has a selected packageeeee") {
+        // Show a SnackBar with the message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Already have a package'),
+          ),
+        );
+
+        // Delay navigation to SelectPackagePage
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectPackagePage()),
+          );
+        });
+      } else {
+        print("Error in buypkge: $e");
+        _showDialog(
+          'Something Went Wrong',
+          'Error',
+        );
+      }
     }
   }
 
@@ -84,7 +145,7 @@ class _BuyPackageState extends State<BuyPackage> {
                     backgroundColor: Color(0xFF752FFF),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
                   ),
-                  onPressed: buypkg,
+                  onPressed: buypkge,
                   child: Text("Make Payment"),
                 ),
               ),
