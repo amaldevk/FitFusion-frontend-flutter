@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/pages/CurrendPackage.dart';
+import 'package:fitfusion_app/pages/currentPackage.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
@@ -187,8 +188,8 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                   borderRadius: BorderRadius.circular(4),
                 ),
               ) ,
-                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage(token: 'token', userId: 'userId')));}, child:Text("Current Package")))
-        ],
+                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>curtpkg( userId: userId)));}, child:Text("Current Package"))//token: 'token',
+          )],
       ),
     );
   }

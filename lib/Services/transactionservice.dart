@@ -19,6 +19,59 @@ class PostApiService {
       throw Exception("Failed to send data");
     }
   }
+  Future<List<Post2>> getTransaction(String userId) async {
+    final url = Uri.parse('http://localhost:3006/api/tran/viewuser');
+
+    try {
+      final response = await http.post(
+        url,
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, String>{'userId': userId}),
+      );
+
+      if (response.statusCode == 201) {
+        var resp = response.body;
+        return jsonDecode(resp);
+      } else {
+        throw Exception('Failed to get data');
+      }
+    } catch (error) {
+      print('Error in receiving data: $error');
+      throw error;
+    }
+  }
+
+  //
+  // Future<List<Post2>> getTransaction(String userId) async {
+  //   var client = http.Client();
+  //   var apiUrl = Uri.parse("http://localhost:3006/api/tran/viewuser");
+  //
+  //   var response = await client.post(apiUrl,
+  //       headers: <String, String>{
+  //         "Content-Type": "application/json; charset=UTF-8"
+  //       },
+  //       body: jsonEncode(<String, String>{
+  //         "userId": userId
+  //       })
+  //   );
+  //   if (response.statusCode == 200) {
+  //     return json.decode(response.body);
+  //   }
+  //   else {
+  //     throw Exception("failed to add");
+  //   }
+  // }
+  // if (response.statusCode == 200) {
+  // List<dynamic> jsonResponse = jsonDecode(response.body);
+  // List<Post2> transactions = [];
+  // for (var item in jsonResponse) {
+  // transactions.add(Post2.fromJson(item));
+  // }
+  // return transactions;
+  // } else {
+  // return [];
+  // }
+  // }
 
 
 
