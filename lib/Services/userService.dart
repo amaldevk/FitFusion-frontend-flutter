@@ -148,4 +148,30 @@ class userApiService{
     }
   }
 
+  Future<bool> approveUser(String userId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://localhost:3006/api/admin/approveUser'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'userId': userId,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // User approved successfully
+        return true;
+      } else {
+        // Error occurred while approving user
+        return false;
+      }
+    } catch (error) {
+      // Error occurred while making the HTTP request
+      print('Error approving user: $error');
+      return false;
+    }
+  }
+
 }

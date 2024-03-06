@@ -5,44 +5,47 @@
 
 import 'dart:convert';
 
-User userFromJson(String str) => User.fromJson(json.decode(str));
 
-String userToJson(User data) => json.encode(data.toJson());
+List<User> userFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+
+String userToJson(List<User> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class User {
-  String id;
-  String name;
-  String address;
-  String dateofbirth;
-  String age;
-  String contactno;
-  String emailid;
-  String gender;
-  String bloodgroup;
-  String height;
-  String weight;
-  String idproof;
-  String username;
-  String password;
-  String paymentStatus;
-  int v;
+  String? id;
+  String? name;
+  String? address;
+  String? dateofbirth; // Use nullable types for fields that can be null
+  String? age;
+  String? contactno;
+  String? emailid;
+  String? gender;
+  String? bloodgroup;
+  String? height;
+  String? weight;
+  String? idproof;
+  String? username;
+  String? password;
+  String? paymentStatus;
+  bool? approved;
+  int? v;
 
   User({
     required this.id,
     required this.name,
     required this.address,
-    required this.dateofbirth,
-    required this.age,
-    required this.contactno,
-    required this.emailid,
-    required this.gender,
-    required this.bloodgroup,
-    required this.height,
-    required this.weight,
-    required this.idproof,
-    required this.username,
-    required this.password,
-    required this.paymentStatus,
+    this.dateofbirth, // Use nullable types for fields that can be null
+    this.age,
+    this.contactno,
+    this.emailid,
+    this.gender,
+    this.bloodgroup,
+    this.height,
+    this.weight,
+    this.idproof,
+    this.username,
+    this.password,
+    this.paymentStatus,
+    this.approved,
     required this.v,
   });
 
@@ -50,7 +53,7 @@ class User {
     id: json["_id"],
     name: json["name"],
     address: json["address"],
-    dateofbirth: json["dateofbirth"],
+    dateofbirth: json["dateofbirth"], // Check for null values
     age: json["age"],
     contactno: json["contactno"],
     emailid: json["emailid"],
@@ -62,6 +65,7 @@ class User {
     username: json["username"],
     password: json["password"],
     paymentStatus: json["paymentStatus"],
+    approved: json["approved"],
     v: json["__v"],
   );
 
@@ -81,6 +85,9 @@ class User {
     "username": username,
     "password": password,
     "paymentStatus": paymentStatus,
+    "approved": approved,
     "__v": v,
   };
+
 }
+
