@@ -9,6 +9,7 @@ List<Viewuser> viewuserFromJson(String str) => List<Viewuser>.from(json.decode(s
 String viewuserToJson(List<Viewuser> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Viewuser {
+
   String name;
   String age;
   String contactno;
@@ -22,6 +23,7 @@ class Viewuser {
   PaymentStatus paymentStatus;
 
   Viewuser({
+
     required this.name,
     required this.age,
     required this.contactno,
@@ -36,6 +38,7 @@ class Viewuser {
   });
 
   factory Viewuser.fromJson(Map<String, dynamic> json) => Viewuser(
+
     name: json["name"],
     age: json["age"],
     contactno: json["contactno"],

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:fitfusion_app/Services/userService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewUser extends StatefulWidget {
   const ViewUser({Key? key});
@@ -19,7 +20,22 @@ class _ViewUserState extends State<ViewUser> {
     super.initState();
     data = userApiService().getUser();
   }
+  void SendValuesToApi() async{
 
+    SharedPreferences prefer=await SharedPreferences.getInstance();
+    String id=prefer.setString("userId", id);
+    print(id);
+
+    final response= await userApiService().deleteUser(id);
+    print(response);
+    if(response["status"]=="success"){
+      print("successfuly Deleted");
+    }
+    else
+    {
+      print("Error");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,7 +52,7 @@ class _ViewUserState extends State<ViewUser> {
               Navigator.pop(context);
             },
             icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
-            tooltip: 'View Package',
+            tooltip: 'View User',
           ),
           actions: [
             IconButton(
@@ -157,11 +173,8 @@ class _ViewUserState extends State<ViewUser> {
               child: Text("Cancel"),
             ),
             TextButton(
-              onPressed: () {
-                //_deleteUser(userId);
-                //Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>deleteUser()));
-              },
+              onPressed: SendValuesToApi
+              ,
               child: Text("Delete"),
             ),
           ],

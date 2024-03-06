@@ -3,30 +3,59 @@ import 'dart:io';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:http/http.dart' as http;
 
-class userApiService{
+ class userApiService{
+   Future<dynamic> deleteUser(String id) async {
+   var client = http.Client();
+   var apiUrl = Uri.parse("http://localhost:3006/api/admin/delete?id=$id");
 
-  Future<dynamic> deleteUser(String id) async {
-    var client = http.Client();
-    var apiUrl = Uri.parse("http://localhost:3006/api/admin/delete");
+   try {
+   var response = await client.delete(
+   apiUrl,
+   headers: {
+   "Content-Type": "application/json",
+   },
+   );
 
-    try {
-      var response = await client.post(
-        apiUrl,
-        body: jsonEncode({"id": id}),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      );
+   print("Response Status Code: ${response.statusCode}");
+   print("Response Body: ${response.body}");
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else {
-        throw Exception("Invalid user");
-      }
-    } finally {
-      client.close();
-    }
-  }
+   if (response.statusCode == 200) {
+   return json.decode(response.body);
+   } else {
+   throw Exception("Failed to delete user. Status code: ${response.statusCode}");
+   }
+   } finally {
+   client.close();
+   }
+   }
+
+//
+//   Future<dynamic> deleteUser(String id) async {
+//     var client = http.Client();
+//     var apiUrl = Uri.parse("http://localhost:3006/api/admin/delete");
+//
+//     try {
+//       var response = await client.delete(
+//         apiUrl,
+//         body: jsonEncode({"id": id}),
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       );
+//
+//       print("Response Status Code: ${response.statusCode}");
+//       print("Response Body: ${response.body}");
+//
+//       if (response.statusCode == 200) {
+//         return json.decode(response.body);
+//       } else {
+//         throw Exception("Failed to delete user. Status code: ${response.statusCode}");
+//        // throw Exception("Invalid user");
+//       }
+//     } finally {
+//       client.close();
+//     }
+//   }
 
   Future<dynamic> getSeruser(String name) async {
   var client = http.Client();
