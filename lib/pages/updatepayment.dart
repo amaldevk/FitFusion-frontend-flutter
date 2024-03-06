@@ -36,7 +36,7 @@ class _View_profileState extends State<updatepayment> {
     print(userId);
     print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-      final response = await UpdateApiService().addPackageApi(widget.userid,packageId);
+      final response = await UpdateApiService().addPackageApi(widget.userid,packageId,widget.userToken);
       print("response"+response);
       if (response != null && mounted) {
         print("Successfull");
