@@ -6,71 +6,110 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Login extends StatefulWidget {
-  const Login({super.key});
+  const Login({Key? key});
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  String email = "", password = "", message = "";
+  TextEditingController n1 = new TextEditingController();
+  TextEditingController n2 = new TextEditingController();
 
-  String email="",password="",message="";
-  TextEditingController n1 =new TextEditingController();
-  TextEditingController n2 =new TextEditingController();
+  // Gym details
+  String gymName = "FitFusion Gym";
+  String location = "123 Main Street, Cityville";
+  String ownerName = "John Doe";
+  String contactDetails = "Contact: +1 123-456-7890";
 
-  void loginCheck() async{
+  void loginCheck() async {
     final response = await userApiService().loginApi(n1.text, n2.text);
 
-    if(response["status"]=="success"){
-
-      String userId =response["userdata"]["_id"].toString();
-      String userToken =response["token"].toString();
+    if (response["status"] == "success") {
+      String userId = response["userdata"]["_id"].toString();
+      String userToken = response["token"].toString();
 
       SharedPreferences.setMockInitialValues({});
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("userid", userId);
       preferences.setString("token", userToken);
 
-      print("successfull uid"+userId);
-      print("Token is:"+userToken);
+      print("successfully logged in uid: $userId");
+      print("Token is: $userToken");
 
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
-    }
-
-    else if(response["status"]=="Invalid user"){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SelectPackagePage()),
+      );
+    } else if (response["status"] == "Invalid user") {
       setState(() {
-        message="Invalid emailID";
+        message = "Invalid emailID";
+      });
+    } else if (response["status"] == "Incorrect password") {
+      setState(() {
+        message = "Invalid Password";
       });
     }
-    else if(response["status"]=="Incorrect password"){
-      setState(() {
-        message="Invalid Password";
-      });
-    }
-
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-
           width: double.infinity,
           padding: EdgeInsets.all(16),
           child: Column(
-
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 90,),
-
-              CircleAvatar(
-                  radius: 100,
-                  child:SvgPicture.asset("assets/Mobile login-rafiki.svg")
-
+              SizedBox(
+                height: 90,
               ),
-              SizedBox(height:40,),
+              CircleAvatar(
+                radius: 100,
+                child: SvgPicture.asset("assets/Mobile login-rafiki.svg"),
+              ),
+              SizedBox(height: 40,),
+              // Display Gym Details
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Gym Name: $gymName",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Location: $location",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Owner: $ownerName",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    "Contact: $contactDetails",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
               TextField(
                 controller: n1,
                 decoration: InputDecoration(
@@ -85,56 +124,92 @@ class _LoginState extends State<Login> {
                 controller: n2,
                 obscureText: true,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Password",
-                    fillColor: Color(0xFF0dadae0).withOpacity(0.2),
-                    filled: true,
-                    suffixIcon: Icon(Icons.key)
+                  border: OutlineInputBorder(),
+                  hintText: "Password",
+                  fillColor: Color(0xFF0dadae0).withOpacity(0.2),
+                  filled: true,
+                  suffixIcon: Icon(Icons.key),
                 ),
               ),
               SizedBox(height: 20,),
               SizedBox(
-                width: 600,height: 45,
+                width: 600,
+                height: 45,
                 child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF752FFF).withOpacity(0.6),
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4)
-                        )
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF752FFF).withOpacity(0.6),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                    onPressed:loginCheck, child: Text("Log In ",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),)),
+                  ),
+                  onPressed: loginCheck,
+                  child: Text(
+                    "Log In ",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
               SizedBox(height: 30,),
-              Row( mainAxisAlignment: MainAxisAlignment.center,
-                children:[
-                  Text(message,style: TextStyle(fontSize: 15,color:Colors.red )),],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    message,
+                    style: TextStyle(fontSize: 15, color: Colors.red),
+                  ),
+                ],
               ),
               SizedBox(height: 10,),
-              Text("OR",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Colors.black45 )),
+              Text(
+                "OR",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black45,
+                ),
+              ),
               SizedBox(height: 30,),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>UserRegister()));
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UserRegister()),
+                      );
                     },
-                    child: Text("Register",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF).withOpacity(0.7) )),
+                    child: Text(
+                      "Register",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF752FFF).withOpacity(0.7),
+                      ),
+                    ),
                   ),
                   SizedBox(width: 35,),
                   GestureDetector(
-                    onTap:(){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminLogin()));},
-                    child: Text("AdminLogin",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold,color:Color(0xFF752FFF) )),
-                  )
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => AdminLogin()),
+                      );
+                    },
+                    child: Text(
+                      "AdminLogin",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF752FFF),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ],
-
           ),
-
         ),
       ),
     );
