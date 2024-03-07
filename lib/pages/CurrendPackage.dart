@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:fitfusion_app/pages/updatepackage.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/currentSubscriptionModel.dart';
 import 'package:fitfusion_app/Services/subscriptionServices.dart';
@@ -15,6 +16,8 @@ class CurrentPackage extends StatefulWidget {
 
 class _CurrentPackageState extends State<CurrentPackage> {
   late Future<List<Subscribe>> _currentPackageList=Future.value([]);
+  String userId="";
+  String token="";
 
   @override
   void initState() {
@@ -23,8 +26,8 @@ class _CurrentPackageState extends State<CurrentPackage> {
   }
   Future<void> loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String userId = prefs.getString("userid") ?? "";
-    String token = prefs.getString("token") ?? "";
+     userId = prefs.getString("userid") ?? "";
+     token = prefs.getString("token") ?? "";
     print("User Id is :"+userId);
     print("Token is:" + token);
 
@@ -132,6 +135,37 @@ class _CurrentPackageState extends State<CurrentPackage> {
                               fontWeight: FontWeight.bold,
                               fontSize: 20
                           ),),
+                          SizedBox(
+                            width: 200,
+                            child: ElevatedButton(
+                              style:ElevatedButton.styleFrom(
+                                backgroundColor:
+                                Color(0xFF752FFF).withOpacity(0.8),
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                              ) ,
+
+                              onPressed: () async {
+                                SharedPreferences.setMockInitialValues({});
+                                SharedPreferences preferences = await SharedPreferences.getInstance();
+                                preferences.setString("UserID", userId);
+                                print("selectpackage:"+userId);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => updatepackage(userid:userId,userToken: token),
+                                  ),
+                                );
+
+                              },
+                              //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
+                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
+                              child: Text("UPDATE PACKAGE"),
+                            ),
+                          ),
+
                           // Assuming description and subscriptionDate are properties of subscription model
                           // Text('Description: ${subscription.description}'),
                           // SizedBox(height: 8),

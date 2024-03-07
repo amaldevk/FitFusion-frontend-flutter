@@ -1,25 +1,27 @@
-import 'package:fitfusion_app/pages/CurrendPackage.dart';
-import 'package:fitfusion_app/pages/buyPackage.dart';
-import 'package:fitfusion_app/pages/updatepackage.dart';
-import 'package:fitfusion_app/pages/userLogin.dart';
-import 'package:fitfusion_app/pages/userProfile.dart';
-import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
+import 'package:fitfusion_app/pages/updatepayement.dart';
+
+import 'package:fitfusion_app/pages/userProfile.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SelectPackagePage extends StatefulWidget {
-
-  const SelectPackagePage({Key? key}) : super(key: key);
+class updatepackage extends StatefulWidget {
+  final String userid;
+  final String userToken;
+  const updatepackage({Key? key, required this.userid,required this.userToken});
 
   @override
-  State<SelectPackagePage> createState() => _SelectPackagePageState();
+  State<updatepackage> createState() => _updatepackageState();
 }
 
-class _SelectPackagePageState extends State<SelectPackagePage> {
+class _updatepackageState extends State<updatepackage> {
   late Future<List<Package>> data;
-  late String userId = '';
+  late String userId;
+  late String Uid;
+
+
+
 
   @override
   void initState() {
@@ -28,27 +30,18 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
   }
 
   Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
+
     setState(() {
       data = PackageApiService().getPackageApi();
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Color(0xFF752FFF),
-        title: Text("FITFUSION",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
-          },
-          icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
-          tooltip: 'Search User',
-        ),
+        title: Text("PACKAGES",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
       ),
       body: Column(
         children: [
@@ -134,13 +127,15 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
 
                                               SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
-                                              preferences.setString("packageid", packageId);
+                                              SharedPreferences preferences1 = await SharedPreferences.getInstance();
+                                              preferences.setString("packageID", packageId);
+                                              userId = preferences1.getString("userid") ?? "";
+                                              print("ss");
                                               print(packageId);
-                                              preferences.setString("userId", userId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => BuyPackage(userId: userId),
+                                                  builder: (context) => updatepayment(userid:widget.userid,userToken:widget.userToken),
                                                 ),
                                               );
                                             } else {
@@ -170,40 +165,11 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
             ),
           ),
           SizedBox(height: 30,),
-          SizedBox(
-            width: 200,
-            child: ElevatedButton(
-              style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ) ,
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile()));
-              },
-              child: Text("My Profile"),
-            ),
-          ),
-          SizedBox(height: 30,),
-          SizedBox(
-              width: 200,
-              child: ElevatedButton(style:ElevatedButton.styleFrom(
-                backgroundColor:
-                Color(0xFF752FFF).withOpacity(0.8),
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ) ,
-                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage()));}, child:Text("Current Package"))),
 
           //Text("User ID: $userId"),
-
         ],
       ),
     );
   }
 }
+
