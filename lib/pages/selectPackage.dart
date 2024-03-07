@@ -207,6 +207,10 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
+
+              ) ,
+                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage()));}, child:Text("Current Package")))
+
                 onPressed: () {
                   Navigator.push(
                       context,
@@ -218,6 +222,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                 },
                 child: Text("Current Package")),
           )
+
         ],
       ),
     );
