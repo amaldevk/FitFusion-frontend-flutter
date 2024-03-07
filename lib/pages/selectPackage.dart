@@ -212,7 +212,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => CurrentPackage(
-                            token: 'token',
+                            //token: 'token',
                             userId: 'userId',
                           )));
                 },

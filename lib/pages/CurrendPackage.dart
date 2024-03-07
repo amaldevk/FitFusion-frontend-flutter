@@ -1,26 +1,28 @@
 import 'dart:convert';
+import 'package:fitfusion_app/Models/currentmodel.dart';
+import 'package:fitfusion_app/Services/currentService.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/subscriptionModel.dart';
 import 'package:fitfusion_app/Services/subscriptionServices.dart';
 
 class CurrentPackage extends StatefulWidget {
-  final String token;
+  //final String token;
   final String userId;
 
-  const CurrentPackage({Key? key, required this.token, required this.userId}) : super(key: key);
+  const CurrentPackage({Key? key, required this.userId}) : super(key: key);//, required this.token,
 
   @override
   _CurrentPackageState createState() => _CurrentPackageState();
 }
 
 class _CurrentPackageState extends State<CurrentPackage> {
-  late Future<List<SubscribePackage>> _currentPackageList;
+  late Future<List<Current>> _currentPackageList;
 
   @override
   void initState() {
     super.initState();
     _currentPackageList =
-        SubscriptionService.fetchCurrentPackage(widget.token, widget.userId);
+        CurrentApiSer().getPackage(widget.userId);
   }
 
   @override
@@ -29,7 +31,7 @@ class _CurrentPackageState extends State<CurrentPackage> {
       appBar: AppBar(
         title: Text('Current Selected Packages'),
       ),
-      body: FutureBuilder<List<SubscribePackage>>(
+      body: FutureBuilder<List<Current>>(
         future: _currentPackageList,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -76,6 +78,7 @@ class _CurrentPackageState extends State<CurrentPackage> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text('Package Name: ${package.packageName}'),
                         Text('Price: ${package.price}'),
                         Text('Duration: ${package.duration}'),
                         // Assuming description and subscriptionDate are properties of subscription model
