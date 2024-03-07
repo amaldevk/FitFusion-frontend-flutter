@@ -36,8 +36,8 @@ class _View_profileState extends State<updatepayment> {
     print(userId);
     print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-    final response = await SubscriptionService().addPackageApi(widget.userid,packageId);
-    print("response"+response);
+    final Map<String, dynamic>response = await SubscriptionService().addPackageApi(widget.userid,packageId);
+    //print("response"+response);
     if (response != null && mounted) {
       print("Successfull");
     }
@@ -53,10 +53,10 @@ class _View_profileState extends State<updatepayment> {
           style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
-          //   TextButton(
-          //    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>selectPackagepage(userToken: widget.userToken))),
-          //     child: Text('OK'),
-          //    ),
+            TextButton(
+             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
+              child: Text('OK'),
+             ),
         ],
       ),
     );
