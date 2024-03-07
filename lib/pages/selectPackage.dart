@@ -188,7 +188,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                   borderRadius: BorderRadius.circular(4),
                 ),
               ) ,
-                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage(token: 'token', userId: 'userId')));}, child:Text("Current Package")))
+                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage()));}, child:Text("Current Package")))
         ],
       ),
     );
