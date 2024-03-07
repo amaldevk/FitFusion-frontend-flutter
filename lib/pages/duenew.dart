@@ -1,27 +1,27 @@
-import 'package:fitfusion_app/Services/subscriptionService.dart';
-import 'package:fitfusion_app/Services/subscriptionServices.dart';
-import 'package:fitfusion_app/pages/selectPackage.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
-class duenew extends StatefulWidget {
-  final String userId;
-  //final String newPackageId;
-
-  const duenew({super.key});
-
-  @override
-  State<duenew> createState() => _duenewState();
-}
-
-class _duenewState extends State<duenew> {
-  late String packageID;
-String message = '',UID='';
-  @override
-  void initState() {
-    super.initState();
-    _fetchIds();
-  }
+// import 'package:fitfusion_app/Services/subscriptionService.dart';
+// import 'package:fitfusion_app/Services/subscriptionServices.dart';
+// import 'package:fitfusion_app/pages/selectPackage.dart';
+// import 'package:flutter/material.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:fitfusion_app/pages/transactionPage.dart';
+// class duenew extends StatefulWidget {
+//   final String userId;
+//   //final String newPackageId;
+//
+//   const duenew({super.key});
+//
+//   @override
+//   State<duenew> createState() => _duenewState();
+// }
+//
+// class _duenewState extends State<duenew> {
+//   late String packageID;
+// String message = '',UID='';
+//   @override
+//   void initState() {
+//     super.initState();
+//     _fetchIds();
+//   }
 
 
   Future<void> _fetchIds() async {

@@ -218,28 +218,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                           )));
                 },
                 child: Text("Current Package")),
-          ),
-      SizedBox(height: 30),
-      SizedBox(
-        width: 200,
-        child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF752FFF).withOpacity(0.8),
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4),
-              ),
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => duenew(
-                        token: 'token',
-                        userId: 'userId',
-                      )));
-            },
-            child: Text("ALL DUES")),
+          )
         ],
       ),
     );
