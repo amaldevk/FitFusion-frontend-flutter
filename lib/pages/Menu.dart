@@ -4,6 +4,7 @@ import 'package:fitfusion_app/pages/Update.dart';
 import 'package:fitfusion_app/pages/ViewTransaction.dart';
 import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:fitfusion_app/pages/due.dart';
+import 'package:fitfusion_app/pages/viewHistory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,6 +54,10 @@ class _MenuPageState extends State<MenuPage> {
               ListTile(title: const Text("VIEW DUE"),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>DueScreen(subscriptionDetails: subscriptionDetails)));
+                },),
+              ListTile(title: const Text("VIEW HISTORY"),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewHistory()));
                 },)
             ],
           ),
