@@ -1,4 +1,5 @@
 import 'package:fitfusion_app/Services/userService.dart';
+import 'package:fitfusion_app/pages/userLogin.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 class UserRegister extends StatefulWidget {
@@ -74,6 +75,10 @@ class _UserRegisterState extends State<UserRegister> {
 
     if (response['status'] == 'success') {
       print("Successfully added");
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Login()), // Replace LoginPage with your actual login page
+      );
     } else {
       print("Error");
     }
