@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final viewuser = viewuserFromJson(jsonString);
-
 import 'dart:convert';
 
 List<Viewuser> viewuserFromJson(String str) => List<Viewuser>.from(json.decode(str).map((x) => Viewuser.fromJson(x)));
@@ -9,17 +5,17 @@ List<Viewuser> viewuserFromJson(String str) => List<Viewuser>.from(json.decode(s
 String viewuserToJson(List<Viewuser> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Viewuser {
-  String name;
-  String age;
-  String contactno;
-  String emailid;
-  String gender;
-  String bloodgroup;
-  String height;
-  String weight;
-  String idproof;
-  String username;
-  PaymentStatus paymentStatus;
+  String? name;
+  String? age;
+  String? contactno;
+  String? emailid;
+  String? gender;
+  String? bloodgroup;
+  String? height;
+  String? weight;
+  String? idproof;
+  String? username;
+  PaymentStatus? paymentStatus;
 
   Viewuser({
     required this.name,
@@ -35,19 +31,21 @@ class Viewuser {
     required this.paymentStatus,
   });
 
-  factory Viewuser.fromJson(Map<String, dynamic> json) => Viewuser(
-    name: json["name"],
-    age: json["age"],
-    contactno: json["contactno"],
-    emailid: json["emailid"],
-    gender: json["gender"],
-    bloodgroup: json["bloodgroup"],
-    height: json["height"],
-    weight: json["weight"],
-    idproof: json["idproof"],
-    username: json["username"],
-    paymentStatus: paymentStatusValues.map[json["paymentStatus"]]!,
-  );
+  factory Viewuser.fromJson(Map<String, dynamic> json) {
+    return Viewuser(
+      name: json["name"] ?? 'Unknown',
+      age: json["age"] ?? 'Unknown',
+      contactno: json["contactno"] ?? 'Unknown',
+      emailid: json["emailid"] ?? 'Unknown',
+      gender: json["gender"] ?? 'Unknown',
+      bloodgroup: json["bloodgroup"] ?? 'Unknown',
+      height: json["height"] ?? 'Unknown',
+      weight: json["weight"] ?? 'Unknown',
+      idproof: json["idproof"] ?? 'Unknown',
+      username: json["username"] ?? 'Unknown',
+      paymentStatus: paymentStatusValues.map[json["paymentStatus"]] ?? PaymentStatus.PENDING,
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,

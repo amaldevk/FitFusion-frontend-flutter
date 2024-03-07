@@ -1,3 +1,4 @@
+import 'package:fitfusion_app/pages/Approval.dart';
 import 'package:fitfusion_app/pages/Menu.dart';
 import 'package:fitfusion_app/pages/Update.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class _AdminLoginState extends State<AdminLogin> {
   void checkCredential(){
     if(username.text == "admin" && password.text=="admin" ){
       print("successful login");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminApprovalPage()));
     }
     else{
       print("Incorrect username or password");

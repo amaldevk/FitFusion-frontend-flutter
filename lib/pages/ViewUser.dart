@@ -89,7 +89,7 @@ class _viewUserState extends State<viewUser> {
                                 ? Colors.lightGreen.shade900
                                 : Color(0xFF830317),
                             child: Text(
-                              user.name[0],
+                              user.name?.isNotEmpty ?? false ? user.name![0] : 'N',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -98,7 +98,7 @@ class _viewUserState extends State<viewUser> {
                             ),
                           ),
                           title: Text(
-                            user.name,
+                            user.name ?? 'Null',
                             style: TextStyle(
                               fontSize: 19,
                               fontWeight: FontWeight.bold,
@@ -107,41 +107,53 @@ class _viewUserState extends State<viewUser> {
                                   : Color(0xFF830317),
                             ),
                           ),
-                          subtitle: Text(
-                            "Gender: " +
-                                user.gender +
-                                "\n" +
-                                "Contact Number: " +
-                                user.contactno +
-                                "\n" +
-                                "Email Id: " +
-                                user.emailid +
-                                "\n" +
-                                "Blood Group: " +
-                                user.bloodgroup,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: user.paymentStatus == PaymentStatus.SUCCESS
-                                  ? Colors.lightGreen.shade900
-                                  : null,
-                            ),
-                          ),
-                        ),
-                        Text("ID proof: " + user.idproof),
-                        Padding(
-                          padding: const EdgeInsets.only(left:380),
-                          child: SizedBox(
-                            width: 180,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFC00121),
-                                foregroundColor: Colors.white
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Gender: ${user.gender ?? 'Unknown'}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: user.paymentStatus == PaymentStatus.SUCCESS
+                                      ? Colors.lightGreen.shade900
+                                      : Color(0xFF830317),
+                                ),
                               ),
-                              onPressed: () => deleteUser(user.emailid), // Delete the user
-                              child: Text('Delete User'),
-                            ),
+                              Text(
+                                "Contact Number: ${user.contactno ?? 'Unknown'}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: user.paymentStatus == PaymentStatus.SUCCESS
+                                      ? Colors.lightGreen.shade900
+                                      : Color(0xFF830317),
+                                ),
+                              ),
+                              Text(
+                                "Email Id: ${user.emailid ?? 'Unknown'}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: user.paymentStatus == PaymentStatus.SUCCESS
+                                      ? Colors.lightGreen.shade900
+                                      : Color(0xFF830317),
+                                ),
+                              ),
+                              Text(
+                                "Blood Group: ${user.bloodgroup ?? 'Unknown'}",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: user.paymentStatus == PaymentStatus.SUCCESS
+                                      ? Colors.lightGreen.shade900
+                                      : Color(0xFF830317),
+                                ),
+                              ),
+                            ],
+                          ),
+                          trailing: IconButton(
+                            onPressed: () => deleteUser(user.emailid ?? 'Unknown'), // Delete the user
+                            icon: Icon(Icons.delete_forever, color: Colors.red),
                           ),
                         ),
+                        Text("ID proof: ${user.idproof ?? 'Unknown'}"),
                       ],
                     ),
                   );
