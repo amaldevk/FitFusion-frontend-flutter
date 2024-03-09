@@ -26,7 +26,7 @@ class SubscriptionService {
       throw Exception('Failed to load selected package: $e');
     }
   }
-  Future<dynamic> addPackageApi(String userId, String newPackageId) async
+  Future<dynamic> addPackageApi(String userId, String newPackageId,String token) async
   {
     var client =http.Client();
     var apiUrl= Uri.parse("http://localhost:3006/api/subscription/update");
@@ -38,7 +38,8 @@ class SubscriptionService {
         },
         body: jsonEncode(<String,String>{
           "userId": userId,
-          "newPackageId": newPackageId
+          "newPackageId": newPackageId,
+          "token":token
         })
     );
     if(response.statusCode==200)

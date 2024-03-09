@@ -1,24 +1,20 @@
 import 'dart:async';
-import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/Services/subscriptionServices.dart';
-import 'package:fitfusion_app/Services/subscriptionservice.dart';
-import 'package:fitfusion_app/Services/userService.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// Assuming UserServiceApi is correctly implemented elsewhere
 
-class updatepayment extends StatefulWidget {
-  final String userid;
+class UpdatePayment extends StatefulWidget {
+  final String userId;
   final String userToken;
-  const updatepayment({Key? key, required this.userid,required this.userToken}) : super(key: key);
+
+  const UpdatePayment({Key? key, required this.userId, required this.userToken}) : super(key: key);
 
   @override
-  State<updatepayment> createState() => _View_profileState();
+  State<UpdatePayment> createState() => _UpdatePaymentState();
 }
 
-class _View_profileState extends State<updatepayment> {
-
+class _UpdatePaymentState extends State<UpdatePayment> {
   @override
   void initState() {
     super.initState();
@@ -26,41 +22,44 @@ class _View_profileState extends State<updatepayment> {
   }
 
   Future<void> loadData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String userId = preferences.getString("userid") ?? "";
-    String packageId = preferences.getString("packageID") ?? "";
-    String userTok = preferences.getString("token") ?? "";
-    print("dd"+widget.userid);
-    print("dd"+packageId);
+    try {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String userId = preferences.getString("userid") ?? "";
+      String packageId = preferences.getString("packageID") ?? "";
+      String userToken = preferences.getString("token") ?? "";
 
-    print(userId);
-    print("Token is:"+widget.userToken);
-    // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-    final Map<String, dynamic>response = await SubscriptionService().addPackageApi(widget.userid,packageId);
-    //print("response"+response);
-    if (response != null && mounted) {
-      print("Successfull");
+      print("UserId: $userId");
+      print("Token is: ${widget.userToken}");
+      print("PackageId: $packageId");
+
+      final Map<String, dynamic> response = await SubscriptionService().addPackageApi(widget.userId, packageId, widget.userToken);
+
+      if (response != null && mounted) {
+        print("Successful");
+      } else {
+        print("Error fetching user data");
+      }
+    } catch (e) {
+      print("Error: $e");
+      // Handle error accordingly
     }
-    else {
-      // Handling exceptions that might be thrown by UserServiceApi().searchData()
-      print("Error fetching user data:");
-      // Optionally, show an error message to the user
-    }
+
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Payment Successfull',
-          style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
+        title: Text(
+          'Payment Status',
+          style: TextStyle(color: Color(0xFF008000), fontSize: 20, fontWeight: FontWeight.bold),
+        ),
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
-            TextButton(
-             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>SelectPackagePage())),
-              child: Text('OK'),
-             ),
+          TextButton(
+            onPressed: () => Navigator.pushNamed(context, '/selectPackage'),
+            child: Text('OK'),
+          ),
         ],
       ),
     );
-
   }
 
   @override
@@ -68,7 +67,7 @@ class _View_profileState extends State<updatepayment> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF752FFF),
-        title: Text("PAYMENT",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+        title: Text("PAYMENT", style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -77,8 +76,12 @@ class _View_profileState extends State<updatepayment> {
           tooltip: 'Search User',
         ),
       ),
-      body: Container(child: Center(child: Text("PAYMENT SUCCESSFULL",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),)),
-
+      body: Center(
+        child: Text(
+          "PAYMENT SUCCESSFUL",
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
     );
   }
 }

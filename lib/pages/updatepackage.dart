@@ -135,7 +135,7 @@ class _updatepackageState extends State<updatepackage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => updatepayment(userid:widget.userid,userToken:widget.userToken),
+                                                  builder: (context) => UpdatePayment(widget.userid,widget.userToken),
                                                 ),
                                               );
                                             } else {
