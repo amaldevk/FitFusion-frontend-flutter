@@ -16,7 +16,7 @@ class _AdminLoginState extends State<AdminLogin> {
   void checkCredential(){
     if(username.text == "admin" && password.text=="admin" ){
       print("successful login");
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminApprovalPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuPage()));
     }
     else{
       print("Incorrect username or password");
