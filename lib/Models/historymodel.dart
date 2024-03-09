@@ -27,7 +27,7 @@ class History {
 class HistoryEntry {
   String id;
   UserId userId;
-  PackageId oldPackageId;
+  PackageId? oldPackageId;
   PackageId newPackageId;
   int? refund;
   int? payToAdmin;
@@ -36,7 +36,7 @@ class HistoryEntry {
   HistoryEntry({
     required this.id,
     required this.userId,
-    required this.oldPackageId,
+    this.oldPackageId,
     required this.newPackageId,
     this.refund,
     this.payToAdmin,
@@ -46,7 +46,8 @@ class HistoryEntry {
   factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
     id: json["_id"],
     userId: UserId.fromJson(json["userId"]),
-    oldPackageId: PackageId.fromJson(json["oldPackageId"]),
+    oldPackageId: json["oldPackageId"] != null ? PackageId.fromJson(json["oldPackageId"]) : null,
+    //oldPackageId: PackageId.fromJson(json["oldPackageId"]),
     newPackageId: PackageId.fromJson(json["newPackageId"]),
     refund: json["refund"],
     payToAdmin: json["payToAdmin"],
@@ -56,7 +57,7 @@ class HistoryEntry {
   Map<String, dynamic> toJson() => {
     "_id": id,
     "userId": userId.toJson(),
-    "oldPackageId": oldPackageId.toJson(),
+    "oldPackageId": oldPackageId?.toJson(),
     "newPackageId": newPackageId.toJson(),
     "refund": refund,
     "payToAdmin": payToAdmin,
