@@ -29,6 +29,11 @@ class _BuyPackageState extends State<BuyPackage> {
       packageID = preferences.getString("packageid") ?? "";
     });
   }
+
+  Future<void> _updatePackageId(String newPackageId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("packageid", newPackageId);
+  }
   void _showDialog(String title, String content) {
     showDialog(
       context: context,
@@ -80,7 +85,7 @@ class _BuyPackageState extends State<BuyPackage> {
         _showDialog(
           'Payment Successful',
           'Package selected successfully!',
-        );
+        );await _updatePackageId(response['newPackageId']);
       } else {
         _showDialog(
           'Something Went Wrong',

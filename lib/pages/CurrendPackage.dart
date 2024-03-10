@@ -1,184 +1,159 @@
-import 'dart:convert';
-import 'package:fitfusion_app/pages/updatepackage.dart';
+import 'package:fitfusion_app/Services/subscriptionService.dart';
+import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
-import 'package:fitfusion_app/Models/currentSubscriptionModel.dart';
-import 'package:fitfusion_app/Services/subscriptionServices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fitfusion_app/pages/transactionPage.dart';
 
-class CurrentPackage extends StatefulWidget {
+class BuyPackage extends StatefulWidget {
+  final String userId;
 
-
-  const CurrentPackage({Key? key}) : super(key: key);
+  const BuyPackage({Key? key, required this.userId}) : super(key: key);
 
   @override
-  _CurrentPackageState createState() => _CurrentPackageState();
+  State<BuyPackage> createState() => _BuyPackageState();
 }
 
-class _CurrentPackageState extends State<CurrentPackage> {
-  late Future<List<Subscribe>> _currentPackageList=Future.value([]);
-  String userId="";
-  String token="";
+class _BuyPackageState extends State<BuyPackage> {
+  late String packageID;
+  String message = '', UID = '';
 
   @override
   void initState() {
     super.initState();
-    loadData();
+    _fetchIds();
   }
-  Future<void> loadData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-     userId = prefs.getString("userid") ?? "";
-     token = prefs.getString("token") ?? "";
-    print("User Id is :"+userId);
-    print("Token is:" + token);
 
-    try {
-      _currentPackageList = SubscriptionService.fetchCurrentPackage(token, userId);
-      if (_currentPackageList != null && mounted) {
-        setState(() {
-          print(_currentPackageList);
-        });
-      }
-    } catch (e) {
-      // Handling exceptions that might be thrown by UserServiceApi().searchData()
-      print("Error fetching user data: $e");
-      // Optionally, show an error message to the user
+  Future<void> _fetchIds() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      packageID = preferences.getString("packageid") ?? "";
+    });
+  }
+
+  Future<void> _updatePackageId(String newPackageId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("packageid", newPackageId);
+  }
+
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(
+          title,
+          style: TextStyle(color: Color(0xFF008000), fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        content: Text(content),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPackagePage())),
+            child: Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void buypkge() async {
+    print("buy package is called");
+    UID = widget.userId;
+
+    // Check if packageID is null or empty
+    if (packageID == null || packageID.isEmpty) {
+      // Handle the case for a new user selecting a package
+      // You can customize this part based on your logic for new users
+      _showDialog(
+        'Payment Successful',
+        'New user selected a package successfully!',
+      );
+      return;
     }
 
+    try {
+      final response = await subApiSer().buySub(widget.userId.toString(), packageID.toString());
+      print("msg" + response["message"]);
+
+      setState(() {
+        message = response['message'];
+      });
+
+      if (message == "User already has a selected package") {
+        // Show a SnackBar with the message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Already have a package'),
+          ),
+        );
+
+        // Delay navigation to SelectPackagePage
+        Future.delayed(const Duration(seconds: 2), () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SelectPackagePage()),
+          );
+        });
+      } else if (message == "Package selected successfully") {
+        // Update the package ID in shared preferences
+        await _updatePackageId(response['newPackageId']);
+
+        _showDialog(
+          'Payment Successful',
+          'Package selected successfully!',
+        );
+      } else {
+        _showDialog(
+          'Something Went Wrong',
+          'Error',
+        );
+      }
+    } catch (e) {
+      print("Error in buypkge: $e");
+      _showDialog(
+        'Something Went Wrong',
+        'Error',
+      );
+    }
   }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(
-        backgroundColor: Color(0xFF752FFF),
-        title: Text("Current Selected Packages",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
-          tooltip: 'Search User',
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xFF752FFF),
+          title: Text(
+            "Buy Package",
+            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+            tooltip: 'Search User',
+          ),
         ),
-      ),
-
-
-      body: FutureBuilder<List<Subscribe>>(
-        future: _currentPackageList,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Error loading packages:',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                  Text(
-                    '${snapshot.error}',
-                    style: TextStyle(color: Colors.red),
-                  ),
-                ],
+        body: ListView(
+          padding: EdgeInsets.all(20),
+          children: [
+            SizedBox(height: 15),
+            SizedBox(
+              width: 100,
+              height: 30,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xFF752FFF),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                ),
+                onPressed: buypkge,
+                child: Text("Make Payment"),
               ),
-            );
-          } else if (snapshot.hasData && snapshot.data==null) {
-            // Check if data is null or empty
-            return Center(
-              child: Text(
-                'No packages found.',
-                style: TextStyle(color: Colors.grey),
-              ),
-            );
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                final subscription = snapshot.data![index];
-                final package = subscription.packageId!;
-                final user = subscription.userId!;
-                return SizedBox(
-                  height: 400,
-                  width: MediaQuery.of(context).size.width * 0.2,
-                  child: Card(
-                    color: Color(0xFF752FFF).withOpacity(0.8),
-                    margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: ListTile(
-                      title: Text(
-                        'Name :${package.packageName}',style: TextStyle(
-                      color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30
-                      ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Price: ${package.price}', style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25
-                          ),),
-                          Text('Duration: ${package.duration}', style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 23
-                          ),),
-                          Text('${package.description}', style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20
-                          ),),
-                          Text('Subscription date:${subscription.subscriptionDate}', style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20
-                          ),),
-                          SizedBox(
-                            width: 200,
-                            child: ElevatedButton(
-                              style:ElevatedButton.styleFrom(
-                                backgroundColor:
-                                Color(0xFF752FFF).withOpacity(0.8),
-                                foregroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(4),
-                                ),
-                              ) ,
-
-                              onPressed: () async {
-                                SharedPreferences.setMockInitialValues({});
-                                SharedPreferences preferences = await SharedPreferences.getInstance();
-                                preferences.setString("UserID", userId);
-                                print("selectpackage:"+userId);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => updatepackage(userid:userId,userToken: token),
-                                  ),
-                                );
-
-                              },
-                              //Navigator.push(context, MaterialPageRoute(builder: (context)=>View_profile(userId: userId)));
-                              // Navigator.push(context, MaterialPageRoute(builder: (context)=>updatepackage()));
-                              child: Text("UPDATE PACKAGE"),
-                            ),
-                          ),
-
-                          // Assuming description and subscriptionDate are properties of subscription model
-                          // Text('Description: ${subscription.description}'),
-                          // SizedBox(height: 8),
-                          // Text('Subscription Date: ${subscription.subscriptionDate}'),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          }
-        },
+            ),
+            SizedBox(height: 55),
+          ],
+        ),
       ),
     );
   }

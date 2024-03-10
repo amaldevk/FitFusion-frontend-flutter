@@ -140,7 +140,7 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => BuyPackage(userId: userId),
+                                                  builder: (context) => BuyPackage("userId:", userId),
                                                 ),
                                               );
                                             } else {

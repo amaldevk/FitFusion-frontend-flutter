@@ -55,7 +55,7 @@ class _ViewHistoryState extends State<ViewHistory> {
                         Text('Old Package: ${historyEntry.oldPackageId?.packageName}'),
                         Text('Price: ${historyEntry.oldPackageId?.price}'),
                         Text('Refund: ${historyEntry.refund}'),
-                       // Text('Updated At: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(historyEntry.updatedAt)}'),
+                       Text('Updated At: ${(historyEntry.updatedAt)}'),
                       ],
                     ),
                   ),
