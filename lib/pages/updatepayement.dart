@@ -30,7 +30,7 @@ class _View_profileState extends State<updatepayment> {
     String userId = preferences.getString("userid") ?? "";
     String packageId = preferences.getString("packageID") ?? "";
     String userTok = preferences.getString("token") ?? "";
-    print("dd"+widget.userid);
+    print("dd"+userId);
     print("dd"+packageId);
 
     print(userId);

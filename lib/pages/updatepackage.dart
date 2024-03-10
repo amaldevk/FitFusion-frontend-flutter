@@ -117,8 +117,10 @@ class _updatepackageState extends State<updatepackage> {
                                           ),
                                           onPressed: () async {
                                             String packageName = post.packageName;
+                                            String packageId=post.id;
+                                            print("pkd:"+packageId);
                                             final response =
-                                            await PackageApiService().logpack(packageName);
+                                            await PackageApiService().logpack(packageId);
 
                                             if (response["status"] == "success") {
                                               print("success");
