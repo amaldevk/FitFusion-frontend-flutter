@@ -2,7 +2,7 @@ import 'package:fitfusion_app/Services/subscriptionService.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+//for making change in the payment table
 class BuyPackage extends StatefulWidget {
 
   const BuyPackage({Key? key}) : super(key: key);
