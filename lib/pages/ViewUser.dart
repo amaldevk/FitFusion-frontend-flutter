@@ -1,16 +1,17 @@
+import 'package:fitfusion_app/pages/Update.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/viewUserModel.dart';
 import 'package:fitfusion_app/pages/searchUser.dart';
 import 'package:fitfusion_app/Services/userService.dart';
 
-class viewUser extends StatefulWidget {
-  const viewUser({Key? key});
+class ViewUser extends StatefulWidget {
+  const ViewUser({Key? key});
 
   @override
-  State<viewUser> createState() => _viewUserState();
+  State<ViewUser> createState() => _ViewUserState();
 }
 
-class _viewUserState extends State<viewUser> {
+class _ViewUserState extends State<ViewUser> {
   Future<List<Viewuser>>? data;
 
   @override
@@ -34,49 +35,68 @@ class _viewUserState extends State<viewUser> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF752FFF),
-          title: Text(
-            "View User",
-            style: TextStyle(color: Colors.white),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
-            tooltip: 'View Package',
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => SearchUser()));
-              },
-              icon: Icon(Icons.search, color: Colors.white),
-              tooltip: 'Search User',
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xFF752FFF),
+        title: Text(
+          "View User",
+          style: TextStyle(color: Colors.white),
         ),
-        body: FutureBuilder<List<Viewuser>>(
-          future: data,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text('Error: ${snapshot.error}'),
-              );
-            } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
-              return ListView.builder(
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  Viewuser user = snapshot.data![index];
-                  return Card(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(Icons.arrow_back_ios_sharp, color: Colors.white),
+          tooltip: 'View Package',
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchUser()));
+            },
+            icon: Icon(Icons.search, color: Colors.white),
+            tooltip: 'Search User',
+          ),
+        ],
+      ),
+      body: FutureBuilder<List<Viewuser>>(
+        future: data,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                Viewuser user = snapshot.data![index];
+                return GestureDetector(
+                  onTap: () {
+                    if (user.paymentStatus == PaymentStatus.SUCCESS) {
+                      showDialog(context: context, builder: (context) =>AlertDialog(title: Text('Payment Successfull!')));
+                    } else {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePayment()));
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Payment Not Successful'),
+                          content: Text('Update the payment status to allow the user to log in'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                  child: Card(
                     color: user.paymentStatus == PaymentStatus.SUCCESS
                         ? Colors.white.withOpacity(0.9)
                         : Colors.white.withOpacity(0.9),
@@ -156,16 +176,16 @@ class _viewUserState extends State<viewUser> {
                         Text("ID proof: ${user.idproof ?? 'Unknown'}"),
                       ],
                     ),
-                  );
-                },
-              );
-            } else {
-              return Center(
-                child: Text('No data available.'),
-              );
-            }
-          },
-        ),
+                  ),
+                );
+              },
+            );
+          } else {
+            return Center(
+              child: Text('No data available.'),
+            );
+          }
+        },
       ),
     );
   }

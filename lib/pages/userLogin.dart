@@ -20,36 +20,50 @@ class _LoginState extends State<Login> {
   TextEditingController n1 =new TextEditingController();
   TextEditingController n2 =new TextEditingController();
 
-  void loginCheck() async{
+  void loginCheck() async {
     final response = await userApiService().loginApi(n1.text, n2.text);
 
-    if(response["status"]=="success"){
-
-      String userId =response["userdata"]["_id"].toString();
-      String userToken =response["token"].toString();
+    if (response["status"] == "success") {
+      String userId = response["userdata"]["_id"].toString();
+      String userToken = response["token"].toString();
 
       SharedPreferences.setMockInitialValues({});
       SharedPreferences preferences = await SharedPreferences.getInstance();
       preferences.setString("userid", userId);
       preferences.setString("token", userToken);
 
-      print("successfull uid"+userId);
-      print("Token is:"+userToken);
+      print("successfull uid" + userId);
+      print("Token is:" + userToken);
 
-      Navigator.push(context,MaterialPageRoute(builder: (context)=>SelectPackagePage()));
-    }
-
-    else if(response["status"]=="Invalid user"){
+      // Check payment status
+      if (response["paymentStatus"] == "Success") {
+        // Payment successful, navigate to SelectPackagePage
+        Navigator.push(context, MaterialPageRoute(builder: (context) => SelectPackagePage()));
+      } else {
+        // Payment not successful, show alert dialog
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Payment Not Successful'),
+            content: Text('Please complete your payment to login.'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    } else if (response["status"] == "Invalid user") {
       setState(() {
-        message="Invalid emailID";
+        message = "Invalid emailID";
+      });
+    } else if (response["status"] == "Incorrect password") {
+      setState(() {
+        message = "Invalid Password";
       });
     }
-    else if(response["status"]=="Incorrect password"){
-      setState(() {
-        message="Invalid Password";
-      });
-    }
-
   }
   @override
   Widget build(BuildContext context) {
