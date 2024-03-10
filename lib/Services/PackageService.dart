@@ -42,7 +42,7 @@ class PackageApiService {
     }
   }
 
-  Future<dynamic> logpack(String packageName) async
+  Future<dynamic> logpack(String packageid) async
   {
     var client = http.Client();
     var apiUri = Uri.parse("http://localhost:3006/api/packages/packageselect");
@@ -53,7 +53,7 @@ class PackageApiService {
         },
         body: jsonEncode(<String,String>
         {
-          "packageName" : packageName
+          "_id" : packageid
 
         }
         )

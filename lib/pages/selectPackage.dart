@@ -123,9 +123,10 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                                             ),
                                           ),
                                           onPressed: () async {
+                                            String packageid=post.id;
                                             String packageName = post.packageName;
                                             final response =
-                                            await PackageApiService().logpack(packageName);
+                                            await PackageApiService().logpack(packageid);
 
                                             if (response["status"] == "success") {
                                               print("success");
