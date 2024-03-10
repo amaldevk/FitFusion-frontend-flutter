@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
         showDialog(
           context: context,
           builder: (context) => AlertDialog(
-            title: Text('Payment Not Successful'),
+            title: Text('Payment Not Successful',style: TextStyle(color: Colors.red),),
             content: Text('Please complete your payment to login.'),
             actions: <Widget>[
               TextButton(

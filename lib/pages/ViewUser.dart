@@ -78,7 +78,7 @@ class _ViewUserState extends State<ViewUser> {
                 return GestureDetector(
                   onTap: () {
                     if (user.paymentStatus == PaymentStatus.SUCCESS) {
-                      showDialog(context: context, builder: (context) =>AlertDialog(title: Text('Payment Successfull!')));
+                      showDialog(context: context, builder: (context) =>AlertDialog(title: Text('Payment Successful')));
                     } else {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => UpdatePayment()));
                       showDialog(

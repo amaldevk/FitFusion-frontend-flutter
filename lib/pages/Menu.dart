@@ -43,10 +43,10 @@ class _MenuPageState extends State<MenuPage> {
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewUser()));
                 },),
-              ListTile(title: const Text("UPDATE PAYMENT"),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
-                },),
+              // ListTile(title: const Text("UPDATE PAYMENT"),
+              //   onTap: (){
+              //     Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
+              //   },),
               ListTile(title: const Text("VIEW TRANSACTION"),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewTransactionScreen()));
