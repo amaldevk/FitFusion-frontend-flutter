@@ -16,8 +16,7 @@ class CurrentPackage extends StatefulWidget {
 
 class _CurrentPackageState extends State<CurrentPackage> {
   late Future<List<Subscribe>> _currentPackageList=Future.value([]);
-  String userId="";
-  String token="";
+
 
   @override
   void initState() {
@@ -26,8 +25,8 @@ class _CurrentPackageState extends State<CurrentPackage> {
   }
   Future<void> loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     userId = prefs.getString("userid") ?? "";
-     token = prefs.getString("token") ?? "";
+    String userId = prefs.getString("userid") ?? "";
+    String token = prefs.getString("token") ?? "";
     print("User Id is :"+userId);
     print("Token is:" + token);
 
@@ -102,7 +101,7 @@ class _CurrentPackageState extends State<CurrentPackage> {
                   height: 400,
                   width: MediaQuery.of(context).size.width * 0.2,
                   child: Card(
-                    color: Color(0xFF752FFF).withOpacity(0.8),
+                    color: Colors.black,
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                     child: ListTile(
                       title: Text(
@@ -147,15 +146,7 @@ class _CurrentPackageState extends State<CurrentPackage> {
                                 ),
                               ) ,
 
-                              onPressed: () async {
-                                SharedPreferences.setMockInitialValues({});
-                                SharedPreferences preferences = await SharedPreferences.getInstance();
-                                preferences.setString("UserID", userId);
-                                print("selectpackage:"+userId);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => updatepackage(userid:userId,userToken: token),
+                              onPressed: ()  {Navigator.push(context, MaterialPageRoute(builder: (context) => updatepackage(),
                                   ),
                                 );
 
