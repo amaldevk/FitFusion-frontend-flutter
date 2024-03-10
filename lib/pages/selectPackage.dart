@@ -19,7 +19,7 @@ class SelectPackagePage extends StatefulWidget {
 
 class _SelectPackagePageState extends State<SelectPackagePage> {
   late Future<List<Package>> data;
-  late String userId = '';
+
 
   @override
   void initState() {
@@ -28,8 +28,6 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
   }
 
   Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
     setState(() {
       data = PackageApiService().getPackageApi();
     });
@@ -133,15 +131,14 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
 
                                               String packageId = response["userdata"]["_id"].toString();
 
-                                              SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
                                               print(packageId);
-                                              preferences.setString("userId", userId);
+
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => BuyPackage(userId: userId),
+                                                  builder: (context) => BuyPackage(),
                                                 ),
                                               );
                                             } else {

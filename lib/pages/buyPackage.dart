@@ -2,20 +2,18 @@ import 'package:fitfusion_app/Services/subscriptionService.dart';
 import 'package:fitfusion_app/pages/selectPackage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
 
 class BuyPackage extends StatefulWidget {
-  final String userId;
 
-  const BuyPackage({Key? key, required this.userId}) : super(key: key);
+  const BuyPackage({Key? key}) : super(key: key);
 
   @override
   State<BuyPackage> createState() => _BuyPackageState();
 }
 
 class _BuyPackageState extends State<BuyPackage> {
-  late String packageID;
-  String message = '',UID='';
+  late String packageID,UID;
+  String message = '';
 
   @override
   void initState() {
@@ -27,6 +25,7 @@ class _BuyPackageState extends State<BuyPackage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       packageID = preferences.getString("packageid") ?? "";
+      UID = preferences.getString("userid") ?? "";
     });
   }
   void _showDialog(String title, String content) {
@@ -51,10 +50,8 @@ class _BuyPackageState extends State<BuyPackage> {
 
   void buypkge() async {
     print("buy package is called");
-    UID = widget.userId;
-
     try {
-      final response = await subApiSer().buySub(widget.userId.toString(), packageID.toString());
+      final response = await subApiSer().buySub(UID.toString(), packageID.toString());
       print("msg" + response["message"]);
 
       setState(() {
@@ -136,7 +133,6 @@ class _BuyPackageState extends State<BuyPackage> {
           padding: EdgeInsets.all(20),
           children: [
             SizedBox(height: 15),
-
               SizedBox(
                 width: 100,height: 30,
                 child: ElevatedButton(
