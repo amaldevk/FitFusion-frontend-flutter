@@ -6,7 +6,6 @@ import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectPackagePage extends StatefulWidget {
