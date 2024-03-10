@@ -1,12 +1,10 @@
 import 'package:fitfusion_app/pages/CurrendPackage.dart';
 import 'package:fitfusion_app/pages/buyPackage.dart';
-import 'package:fitfusion_app/pages/updatepackage.dart';
 import 'package:fitfusion_app/pages/userLogin.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
-import 'package:fitfusion_app/pages/transactionPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectPackagePage extends StatefulWidget {
@@ -19,7 +17,7 @@ class SelectPackagePage extends StatefulWidget {
 
 class _SelectPackagePageState extends State<SelectPackagePage> {
   late Future<List<Package>> data;
-  late String userId = '';
+
 
   @override
   void initState() {
@@ -28,8 +26,6 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
   }
 
   Future<void> fetchData() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    userId = preferences.getString("userid") ?? "";
     setState(() {
       data = PackageApiService().getPackageApi();
     });
@@ -133,15 +129,14 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
 
                                               String packageId = response["userdata"]["_id"].toString();
 
-                                              SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
                                               preferences.setString("packageid", packageId);
                                               print(packageId);
-                                              preferences.setString("userId", userId);
+
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => BuyPackage(userId: userId),
+                                                  builder: (context) => BuyPackage(),
                                                 ),
                                               );
                                             } else {

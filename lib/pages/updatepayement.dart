@@ -9,9 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 // Assuming UserServiceApi is correctly implemented elsewhere
 
 class updatepayment extends StatefulWidget {
-  final String userid;
-  final String userToken;
-  const updatepayment({Key? key, required this.userid,required this.userToken}) : super(key: key);
+
+  const updatepayment({Key? key}) : super(key: key);
 
   @override
   State<updatepayment> createState() => _View_profileState();
@@ -30,13 +29,12 @@ class _View_profileState extends State<updatepayment> {
     String userId = preferences.getString("userid") ?? "";
     String packageId = preferences.getString("packageID") ?? "";
     String userTok = preferences.getString("token") ?? "";
-    print("dd"+userId);
-    print("dd"+packageId);
+    print("userID"+userId);
+    print("packageID"+packageId);
 
     print(userId);
-    print("Token is:"+widget.userToken);
     // Corrected assumption: UserServiceApi().searchData() returns a Future that resolves to a list of user data
-    final Map<String, dynamic>response = await SubscriptionService().addPackageApi(widget.userid,packageId);
+    final Map<String, dynamic>response = await SubscriptionService().addPackageApi(userId,packageId);
     //print("response"+response);
     if (response != null && mounted) {
       print("Successfull");
@@ -49,7 +47,7 @@ class _View_profileState extends State<updatepayment> {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: Text('Payment Successfull',
+        title: Text('Upadted Successfull',
           style: TextStyle(color: Color(0xFF008000),fontSize: 20,fontWeight: FontWeight.bold),),
         content: Image.asset('assets/successGiff.gif'),
         actions: <Widget>[
@@ -68,7 +66,7 @@ class _View_profileState extends State<updatepayment> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF752FFF),
-        title: Text("PAYMENT",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
+        title: Text("Update",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold)),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -77,7 +75,7 @@ class _View_profileState extends State<updatepayment> {
           tooltip: 'Search User',
         ),
       ),
-      body: Container(child: Center(child: Text("PAYMENT SUCCESSFULL",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),)),
+      body: Container(child: Center(child: Text("Package Updated SUCCESSFULL",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),)),
 
     );
   }

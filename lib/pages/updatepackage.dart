@@ -1,15 +1,12 @@
 import 'package:fitfusion_app/Models/PackageModel.dart';
 import 'package:fitfusion_app/Services/PackageService.dart';
 import 'package:fitfusion_app/pages/updatepayement.dart';
-
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class updatepackage extends StatefulWidget {
-  final String userid;
-  final String userToken;
-  const updatepackage({Key? key, required this.userid,required this.userToken});
+  const updatepackage({Key? key}): super(key: key);
 
   @override
   State<updatepackage> createState() => _updatepackageState();
@@ -17,10 +14,6 @@ class updatepackage extends StatefulWidget {
 
 class _updatepackageState extends State<updatepackage> {
   late Future<List<Package>> data;
-  late String userId;
-  late String Uid;
-
-
 
 
   @override
@@ -119,25 +112,20 @@ class _updatepackageState extends State<updatepackage> {
                                             String packageName = post.packageName;
                                             String packageId=post.id;
                                             print("pkd:"+packageId);
-                                            final response =
-                                            await PackageApiService().logpack(packageId);
+                                            final response = await PackageApiService().logpack(packageId);
 
                                             if (response["status"] == "success") {
                                               print("success");
 
                                               String packageId = response["userdata"]["_id"].toString();
 
-                                              SharedPreferences.setMockInitialValues({});
                                               SharedPreferences preferences = await SharedPreferences.getInstance();
-                                              SharedPreferences preferences1 = await SharedPreferences.getInstance();
                                               preferences.setString("packageID", packageId);
-                                              userId = preferences1.getString("userid") ?? "";
-                                              print("ss");
                                               print(packageId);
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
-                                                  builder: (context) => updatepayment(userid:widget.userid,userToken:widget.userToken),
+                                                  builder: (context) => updatepayment(),
                                                 ),
                                               );
                                             } else {
