@@ -52,10 +52,10 @@ class _ViewHistoryState extends State<ViewHistory> {
                       children: [
                         Text('New Package: ${historyEntry.newPackageId.packageName}'),
                         Text('Price: ${historyEntry.newPackageId.price}'),
-                        Text('Old Package: ${historyEntry.oldPackageId?.packageName}'),
-                        Text('Price: ${historyEntry.oldPackageId?.price}'),
-                        Text('Refund: ${historyEntry.refund}'),
-                       // Text('Updated At: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(historyEntry.updatedAt)}'),
+                        Text('Old Package: ${historyEntry.oldPackageId?.packageName ?? 'None'}'),
+                        Text('Price: ${historyEntry.oldPackageId?.price ?? 'None'}'),
+                        Text('Refund: ${historyEntry.refund ?? 'None'}'),
+                        // Text('Updated At: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(historyEntry.updatedAt)}'),
                       ],
                     ),
                   ),
@@ -68,45 +68,3 @@ class _ViewHistoryState extends State<ViewHistory> {
     );
   }
 }
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(backgroundColor: Color(0xFF752FFF),
-//         title: Text(
-//           'View History',
-//           style: TextStyle(color: Colors.white),
-//         ),
-//       ),
-//       body: FutureBuilder<List<HistoryEntry>>(
-//         future: data,
-//         builder: (context, snapshot) {
-//           if (snapshot.connectionState == ConnectionState.waiting) {
-//             return Center(child: CircularProgressIndicator());
-//           } else if (snapshot.hasError) {
-//             return Center(child: Text('Error: ${snapshot.error}'));
-//           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-//             return Center(child: Text('No history entries available.'));
-//           } else {
-//             List<HistoryEntry> historyEntries = snapshot.data!;
-//             return ListView.builder(
-//               itemCount: historyEntries.length,
-//               itemBuilder: (context, index) {
-//                 HistoryEntry historyEntry = historyEntries[index];
-//                 return Card(
-//                   margin: EdgeInsets.all(8.0),
-//                   child: ListTile(
-//                     title: Text('User: ${historyEntry.userId?.name ??
-//                         'Unknown'}'),
-//                     subtitle:
-//                     Text('New Package: ${historyEntry.newPackageId.packageName}'+ "\n"+'Price: ${historyEntry.newPackageId.price}'+ "\n"+'Old Package: ${historyEntry.oldPackageId.packageName}'+"\n"+'Price: ${historyEntry.oldPackageId.price}'+ "\n"'Refund: ${historyEntry.refund}'),
-//                     // Add more details as needed
-//                   ),
-//                 );
-//               },
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-//

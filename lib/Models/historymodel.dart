@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final history = historyFromJson(jsonString);
-
 import 'dart:convert';
 
 History historyFromJson(String str) => History.fromJson(json.decode(str));
@@ -16,11 +12,13 @@ class History {
   });
 
   factory History.fromJson(Map<String, dynamic> json) => History(
-    historyEntries: List<HistoryEntry>.from(json["historyEntries"].map((x) => HistoryEntry.fromJson(x))),
+    historyEntries: List<HistoryEntry>.from(
+        json["historyEntries"].map((x) => HistoryEntry.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
-    "historyEntries": List<dynamic>.from(historyEntries.map((x) => x.toJson())),
+    "historyEntries":
+    List<dynamic>.from(historyEntries.map((x) => x.toJson())),
   };
 }
 
@@ -43,16 +41,18 @@ class HistoryEntry {
     required this.updatedAt,
   });
 
-  factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
-    id: json["_id"],
-    userId: UserId.fromJson(json["userId"]),
-    oldPackageId: json["oldPackageId"] != null ? PackageId.fromJson(json["oldPackageId"]) : null,
-    //oldPackageId: PackageId.fromJson(json["oldPackageId"]),
-    newPackageId: PackageId.fromJson(json["newPackageId"]),
-    refund: json["refund"],
-    payToAdmin: json["payToAdmin"],
-    updatedAt: DateTime.parse(json["updatedAt"]),
-  );
+  factory HistoryEntry.fromJson(Map<String, dynamic> json) {
+    return HistoryEntry(
+      id: json["_id"] ?? "",
+      userId: json["userId"] != null ? UserId.fromJson(json["userId"]) : UserId(id: "", name: ""),
+      oldPackageId: json["oldPackageId"] != null ? PackageId.fromJson(json["oldPackageId"]) : null,
+      newPackageId: json["newPackageId"] != null ? PackageId.fromJson(json["newPackageId"]) : PackageId(id: "", packageName: "", price: ""),
+      refund: json["refund"]?.toInt(), // Cast to int explicitly
+      payToAdmin: json["payToAdmin"]?.toInt(), // Cast to int explicitly
+      updatedAt: json["updatedAt"] != null ? DateTime.parse(json["updatedAt"]) : DateTime.now(),
+    );
+  }
+
 
   Map<String, dynamic> toJson() => {
     "_id": id,
@@ -76,11 +76,13 @@ class PackageId {
     required this.price,
   });
 
-  factory PackageId.fromJson(Map<String, dynamic> json) => PackageId(
-    id: json["_id"],
-    packageName: json["packageName"],
-    price: json["price"],
-  );
+  factory PackageId.fromJson(Map<String, dynamic> json) {
+    return PackageId(
+      id: json["_id"] ?? "",
+      packageName: json["packageName"] ?? "Unknown",
+      price: json["price"] ?? "Unknown",
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "_id": id,
@@ -98,10 +100,12 @@ class UserId {
     required this.name,
   });
 
-  factory UserId.fromJson(Map<String, dynamic> json) => UserId(
-    id: json["_id"],
-    name: json["name"],
-  );
+  factory UserId.fromJson(Map<String, dynamic> json) {
+    return UserId(
+      id: json["_id"] ?? "",
+      name: json["name"] ?? "Unknown",
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "_id": id,
