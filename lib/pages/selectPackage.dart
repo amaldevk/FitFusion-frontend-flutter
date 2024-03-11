@@ -1,5 +1,6 @@
 import 'package:fitfusion_app/pages/CurrendPackage.dart';
 import 'package:fitfusion_app/pages/buyPackage.dart';
+import 'package:fitfusion_app/pages/duePage.dart';
 import 'package:fitfusion_app/pages/userLogin.dart';
 import 'package:fitfusion_app/pages/userProfile.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,20 @@ class SelectPackagePage extends StatefulWidget {
 
 class _SelectPackagePageState extends State<SelectPackagePage> {
   late Future<List<Package>> data;
+  late String userId = "";
 
 
   @override
   void initState() {
     super.initState();
+    getUserId();
     fetchData();
+  }
+  Future<void> getUserId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userId = preferences.getString("userid") ?? ""; // Replace with your actual key
+    });
   }
 
   Future<void> fetchData() async {
@@ -195,6 +204,18 @@ class _SelectPackagePageState extends State<SelectPackagePage> {
                 ),
               ) ,
                   onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>CurrentPackage()));}, child:Text("Current Package"))),
+          SizedBox(height: 30,),
+          SizedBox(
+              width: 200,
+              child: ElevatedButton(style:ElevatedButton.styleFrom(
+                backgroundColor:
+                Color(0xFF752FFF).withOpacity(0.8),
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ) ,
+                  onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>duePage(userId: userId)));}, child:Text("PAckage Information"))),
 
           //Text("User ID: $userId"),
 

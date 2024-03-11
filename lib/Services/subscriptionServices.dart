@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:fitfusion_app/Models/currentSubscriptionModel.dart';
+import 'package:fitfusion_app/Models/dueModel.dart';
 import 'package:http/http.dart' as http;
 
 class SubscriptionService {
@@ -48,6 +49,30 @@ class SubscriptionService {
     else
     {
       throw Exception("failed to add");
+    }
+  }
+  static Future<List<Due>>fetchdue(String userId) async {
+    final url = Uri.parse('http://localhost:3006/api/subscription/due');
+    try {
+      final response = await http.post(
+        url,
+        headers: <String, String>{
+          'Content-Type': 'application/json'
+        },
+        body: jsonEncode({'userId': userId}),
+      );
+
+      if (response.statusCode == 200) {
+        //final List<dynamic> responseData = jsonDecode(response.body);
+       // return responseData.map((json) => Subscribe.fromJson(json)).toList();
+        return jsonDecode(response.body);
+      } else if (response.statusCode == 401) {
+        throw Exception('Unauthorized user');
+      } else {
+        throw Exception('Failed to load due information: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Failed to load due information: $e');
     }
   }
 

@@ -26,18 +26,18 @@ class History {
 
 class HistoryEntry {
   String id;
-  UserId userId;
+  UserId? userId;
   PackageId? oldPackageId;
-  PackageId newPackageId;
-  int? refund;
-  int? payToAdmin;
+  PackageId? newPackageId;
+  double? refund;
+  double? payToAdmin;
   DateTime updatedAt;
 
   HistoryEntry({
     required this.id,
-    required this.userId,
+    this.userId,
     this.oldPackageId,
-    required this.newPackageId,
+    this.newPackageId,
     this.refund,
     this.payToAdmin,
     required this.updatedAt,
@@ -45,20 +45,25 @@ class HistoryEntry {
 
   factory HistoryEntry.fromJson(Map<String, dynamic> json) => HistoryEntry(
     id: json["_id"],
-    userId: UserId.fromJson(json["userId"]),
+    //userId: UserId.fromJson(json["userId"]),
+    //userId: json["userId"] ! = null ? UserId.fromJson(json["userId"]) : null,
+    userId: json["userId"] != null ? UserId.fromJson(json["userId"]) : null,
     oldPackageId: json["oldPackageId"] != null ? PackageId.fromJson(json["oldPackageId"]) : null,
     //oldPackageId: PackageId.fromJson(json["oldPackageId"]),
-    newPackageId: PackageId.fromJson(json["newPackageId"]),
-    refund: json["refund"],
-    payToAdmin: json["payToAdmin"],
+    newPackageId: json["newPackageId"] != null ? PackageId.fromJson(json["newPackageId"]) : null,
+   // newPackageId: PackageId.fromJson(json["newPackageId"]),
+   // refund: json["refund"],
+   // payToAdmin: json["payToAdmin"],
+    refund: (json["refund"] as num?)?.toDouble(), // Convert to double if not null
+    payToAdmin: (json["payToAdmin"] as num?)?.toDouble(), //
     updatedAt: DateTime.parse(json["updatedAt"]),
   );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
-    "userId": userId.toJson(),
+    "userId": userId?.toJson(),
     "oldPackageId": oldPackageId?.toJson(),
-    "newPackageId": newPackageId.toJson(),
+    "newPackageId": newPackageId?.toJson(),
     "refund": refund,
     "payToAdmin": payToAdmin,
     "updatedAt": updatedAt.toIso8601String(),
@@ -94,7 +99,7 @@ class UserId {
   String name;
 
   UserId({
-    required this.id,
+   required this.id,
     required this.name,
   });
 

@@ -1,6 +1,8 @@
+import 'package:fitfusion_app/pages/duePage.dart';
 import 'package:flutter/material.dart';
 import 'package:fitfusion_app/Models/historymodel.dart';
 import 'package:fitfusion_app/Services/historyService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ViewHistory extends StatefulWidget {
   const ViewHistory({Key? key}) : super(key: key);
@@ -11,11 +13,19 @@ class ViewHistory extends StatefulWidget {
 
 class _ViewHistoryState extends State<ViewHistory> {
   late Future<List<HistoryEntry>> data;
+  late String userId="";
 
   @override
   void initState() {
     super.initState();
+    getUserId();
     data = hisApiSer().gethistoryApi();
+  }
+  Future<void> getUserId() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userId = preferences.getString("userid") ?? ""; // Replace with your actual key
+    });
   }
 
   @override
@@ -50,13 +60,26 @@ class _ViewHistoryState extends State<ViewHistory> {
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('New Package: ${historyEntry.newPackageId.packageName}'),
-                        Text('Price: ${historyEntry.newPackageId.price}'),
+                        Text('New Package: ${historyEntry.newPackageId?.packageName}'),
+                        Text('Price: ${historyEntry.newPackageId?.price}'),
                         Text('Old Package: ${historyEntry.oldPackageId?.packageName}'),
                         Text('Price: ${historyEntry.oldPackageId?.price}'),
                         Text('Refund: ${historyEntry.refund}'),
                        // Text('Updated At: ${DateFormat('yyyy-MM-dd HH:mm:ss').format(historyEntry.updatedAt)}'),
                       ],
+                    ),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                       // Handle the Due action here
+                        //For example, navigate to the DuePage
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => duePage(userId:historyEntry.userId?.id ?? ""),
+                          ),
+                        );
+                      },
+                      child: Text('Due'),
                     ),
                   ),
                 );
