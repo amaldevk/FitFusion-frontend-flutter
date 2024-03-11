@@ -52,10 +52,10 @@ class _MenuPageState extends State<MenuPage> {
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewTransactionScreen()));
                 },)  ,
-              ListTile(title: const Text("VIEW DUE",style: TextStyle(fontWeight:FontWeight.bold)),
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=>DueScreen(subscriptionDetails: subscriptionDetails)));
-                },),
+              // ListTile(title: const Text("VIEW DUE",style: TextStyle(fontWeight:FontWeight.bold)),
+              //   onTap: (){
+              //     Navigator.push(context, MaterialPageRoute(builder: (context)=>DueScreen(subscriptionDetails: subscriptionDetails)));
+              //   },),
               ListTile(title: const Text("VIEW HISTORY",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewHistory()));
