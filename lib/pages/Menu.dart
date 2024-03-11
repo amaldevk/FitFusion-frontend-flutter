@@ -4,6 +4,7 @@ import 'package:fitfusion_app/pages/Update.dart';
 import 'package:fitfusion_app/pages/ViewTransaction.dart';
 import 'package:fitfusion_app/pages/ViewUser.dart';
 import 'package:fitfusion_app/pages/due.dart';
+import 'package:fitfusion_app/pages/userLogin.dart';
 import 'package:fitfusion_app/pages/viewHistory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +32,15 @@ class _MenuPageState extends State<MenuPage> {
                     color: Colors.deepPurpleAccent
                 ),
                 child: Text("MY LIST",style: TextStyle(fontSize: 15,color: Colors.white),),),
-              ListTile(title: const Text("ADD PACKAGES"),
+              ListTile(title: const Text("ADD PACKAGES",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Packege()));
                 },),
-              ListTile(title: const Text("ADD TRAINERS"),
+              ListTile(title: const Text("ADD TRAINERS",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>Add_Trainer()));
                 },),
-              ListTile(title: const Text("VIEW USER"),
+              ListTile(title: const Text("VIEW USER",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewUser()));
                 },),
@@ -47,17 +48,21 @@ class _MenuPageState extends State<MenuPage> {
               //   onTap: (){
               //     Navigator.push(context, MaterialPageRoute(builder: (context)=>UpdatePayment()));
               //   },),
-              ListTile(title: const Text("VIEW TRANSACTION"),
+              ListTile(title: const Text("VIEW TRANSACTION",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewTransactionScreen()));
                 },)  ,
-              ListTile(title: const Text("VIEW DUE"),
+              ListTile(title: const Text("VIEW DUE",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>DueScreen(subscriptionDetails: subscriptionDetails)));
                 },),
-              ListTile(title: const Text("VIEW HISTORY"),
+              ListTile(title: const Text("VIEW HISTORY",style: TextStyle(fontWeight:FontWeight.bold)),
                 onTap: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewHistory()));
+                },),
+              ListTile(title: const Text("LOGOUT",style: TextStyle(fontWeight:FontWeight.bold),),
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                 },)
             ],
           ),
